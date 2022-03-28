@@ -1,17 +1,20 @@
 <template>
   <div id="app">
-    <div class="main">
+    <Header />
+    <main class="content">
       <Index />
-    </div>
+    </main>
   </div>
 </template>
 
 <script>
 import Index from "@/views/Index"
+import Header from "@/views/Header"
 export default {
   name: "App",
   components: {
-    Index
+    Index,
+    Header
   }
 };
 </script>
