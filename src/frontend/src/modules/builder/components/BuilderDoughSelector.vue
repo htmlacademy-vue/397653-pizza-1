@@ -12,7 +12,10 @@
           :name="'dough'"
           :isChecked="dough.id === 1"
           @getValue="getValue"
-        />
+        >
+          <b>{{ dough.name }}</b>
+          <span>{{ dough.description }}</span>
+        </RadioButton>
       </div>
     </div>
   </div>

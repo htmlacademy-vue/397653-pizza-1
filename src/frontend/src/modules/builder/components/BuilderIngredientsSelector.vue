@@ -14,7 +14,9 @@
             :name="'sauce'"
             :isChecked="sauce.id === 1"
             @getValue="getValue"
-          />
+          >
+            <span>{{ sauce.name }}</span>
+          </RadioButton>
         </div>
         <div class="ingredients__filling">
           <p>Начинка:</p>

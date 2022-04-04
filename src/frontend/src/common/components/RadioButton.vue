@@ -8,9 +8,7 @@
       :checked="isChecked"
       @change="$emit('getValue', value, name, item.multiplier)"
     />
-    <b v-if="name === 'dough'">{{ item.name }}</b>
-    <span v-if="name !== 'dough'">{{ item.name }}</span>
-    <span v-if="item.description">{{ item.description }}</span>
+    <slot />
   </label>
 </template>
 

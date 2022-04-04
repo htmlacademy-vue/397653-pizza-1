@@ -12,7 +12,9 @@
           :name="'diameter'"
           :isChecked="size.id === 2"
           @getValue="getValue"
-        />
+        >
+          <span>{{ size.name }}</span>
+        </RadioButton>
       </div>
     </div>
   </div>
