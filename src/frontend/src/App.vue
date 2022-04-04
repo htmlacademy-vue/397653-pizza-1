@@ -1,6 +1,6 @@
 <template>
   <div id="app">
-    <AppLayoutHeader/>
+    <AppLayout/>
     <div class="content">
       <IndexHome/>
     </div>
@@ -8,13 +8,13 @@
 </template>
 
 <script>
-import AppLayoutHeader from "@/layouts/AppLayoutHeader"
+import AppLayout from "@/layouts/AppLayout"
 import IndexHome from '@/views/Index';
 
 export default {
   name: "App",
   components: {
-    AppLayoutHeader,
+    AppLayout,
     IndexHome
   }
 };
