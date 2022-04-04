@@ -1,25 +1,12 @@
 ﻿<template>
-  <p>Итого: {{ getThePrice() }} ₽</p>
+  <p>Итого: {{ totalPrice }} ₽</p>
 </template>
 
 <script>
-import { DOUGH_PRICE, SAUCE_PRICE } from '@/common/constants'
-
 export default {
   props: {
-    multiplier: {
-      type: Number,
-      required: true
-    },
-
-    ingredientPrice: {
-      type: Number,
-      required: true
-    }
-  },
-  methods: {
-    getThePrice() {
-      return this.multiplier * (DOUGH_PRICE + SAUCE_PRICE + this.ingredientPrice)
+    totalPrice: {
+      type: Number
     }
   }
 };

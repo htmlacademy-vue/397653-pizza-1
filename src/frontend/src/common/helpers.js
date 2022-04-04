@@ -34,20 +34,36 @@ export const mapSizes = {
   "45 см": "big"
 }
 
-export const addIngredient = (ingredient, ingredientsArray) => {
-  let sameIngredientsArray = ingredientsArray.filter( item => item.ingredient === ingredient)
-  let lastArrayElement = ingredientsArray.length - 1
-  ingredientsArray.push({id: Date.now(), ingredient: ingredient})
-  if(sameIngredientsArray.length === 1) {
-    ingredientsArray[lastArrayElement].second = true
-  } else if(sameIngredientsArray.length === 2) {
-    ingredientsArray[lastArrayElement].third = true
-  } 
-  return ingredientsArray
+export const normalizeIngredients = ingredient => {
+  return {
+    ...ingredient,
+    count: 0,
+  };
 }
 
-export const deleteIngredient = (ingredient, ingredientsArray) => {
-  let ingredientIndex = ingredientsArray.findIndex( item => item.ingredient === ingredient)
-  ingredientsArray.splice(ingredientIndex, 1)
-  return ingredientsArray
+export const getIndex = (ingredient, ingredients) => {
+  let index = ingredients.findIndex( item => item.name === ingredient.name );
+  return index
+}
+
+export const addIngredient = (ingredient, pizzaIngredients, ingredients) => {
+  let index = getIndex(ingredient, ingredients)
+  ingredients[index].count = ingredient.count + 1;
+  let sameIngredients = pizzaIngredients.filter( item => item.ingredient === mapIngredientName[ingredient.name])
+  let lastElement = pizzaIngredients.length - 1
+  pizzaIngredients.push({id: Date.now(), ingredient: mapIngredientName[ingredient.name]})
+  if(sameIngredients.length === 1) {
+    pizzaIngredients[lastElement].second = true
+  } else if(sameIngredients.length === 2) {
+    pizzaIngredients[lastElement].third = true
+  } 
+  return pizzaIngredients
+}
+
+export const deleteIngredient = (ingredient, pizzaIngredients, ingredients) => {
+  let index = getIndex(ingredient, ingredients)
+  ingredients[index].count = ingredient.count - 1;
+  let ingredientIndex = pizzaIngredients.findIndex( item => item.ingredient === mapIngredientName[ingredient.name])
+  pizzaIngredients.splice(ingredientIndex, 1)
+  return pizzaIngredients
 }

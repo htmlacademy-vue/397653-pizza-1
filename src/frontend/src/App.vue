@@ -1,17 +1,21 @@
 <template>
   <div id="app">
-    <AppLayout
-    />
+    <AppLayoutHeader/>
+    <div class="content">
+      <IndexHome/>
+    </div>
   </div>
 </template>
 
 <script>
-import AppLayout from "@/layouts/AppLayout"
+import AppLayoutHeader from "@/layouts/AppLayoutHeader"
+import IndexHome from '@/views/Index';
 
 export default {
   name: "App",
   components: {
-    AppLayout
+    AppLayoutHeader,
+    IndexHome
   }
 };
 </script>

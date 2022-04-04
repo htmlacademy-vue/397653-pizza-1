@@ -3,8 +3,8 @@
     <button
       type="button"
       class="counter__button counter__button--minus"
-      @click="decrement()"
-      :disabled="inputValue === minValue"
+      @click="$emit('deleteIngredient', ingredient)"
+      :disabled="value === minValue"
     >
       <span class="visually-hidden">Меньше</span>
     </button>
@@ -12,14 +12,14 @@
       type="text"
       name="counter"
       class="counter__input"
-      :value="inputValue"
+      :value="value"
       readonly
     />
     <button
       type="button"
       class="counter__button counter__button--plus"
-      @click="increment()"
-      :disabled="inputValue === maxValue"
+      @click="$emit('addIngredient', ingredient)"
+      :disabled="value === maxValue"
     >
       <span class="visually-hidden">Больше</span>
     </button>
@@ -35,28 +35,18 @@ export default {
       type: Object,
       required: true
     },
+
+    value: {
+      type: Number,
+      required: true
+    }
   },
   data() {
     return {
-      inputValue: MIN_INGREDIENT_VALUE,
       minValue: MIN_INGREDIENT_VALUE,
       maxValue: MAX_INGREDIENT_VALUE
     };
-  },
-  methods: {
-    increment() {
-      if (this.inputValue < MAX_INGREDIENT_VALUE) {
-        this.inputValue++;
-        this.$emit('addIngredient', this.ingredient.name, this.ingredient.price)
-      } 
-    },
-    decrement() {
-      if (this.inputValue > MIN_INGREDIENT_VALUE) {
-        this.inputValue--;
-        this.$emit('deleteIngredient', this.ingredient.name, this.ingredient.price)
-      }
-    }
-  },
+  }
 };
 </script>
 

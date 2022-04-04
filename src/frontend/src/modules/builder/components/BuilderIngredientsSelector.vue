@@ -25,15 +25,19 @@
               v-for="ingredient in ingredients"
               :key="ingredient.id"
             >
-              <AppDrag :transfer-data="ingredient">
+              <AppDrag 
+                :transfer-data="ingredient"
+                :draggable="ingredient.count !== max"
+              >
                 <span :class="['filling', getIngredientClass(ingredient.name)]">
                   {{ ingredient.name }}
                 </span>
               </AppDrag>
                 <ItemCounter 
-                  @addIngredient="addIngredient"
-                  @deleteIngredient="deleteIngredient"
+                  @addIngredient="$emit('addIngredient', ingredient)"
+                  @deleteIngredient="$emit('deleteIngredient', ingredient)"
                   :ingredient="ingredient"
+                  :value="ingredient.count"
                 />
             </li>
           </ul>
@@ -45,6 +49,7 @@
 
 <script>
 import { mapIngredientName, mapSauceName } from '@/common/helpers'
+import { MAX_INGREDIENT_VALUE } from '@/common/constants'
 import AppDrag from '@/common/components/AppDrag';
 import RadioButton from '@/common/components/RadioButton'
 import ItemCounter from '@/common/components/ItemCounter'
@@ -76,12 +81,11 @@ export default {
     getValue(value, name) {
       this.$emit('getValue', value, name)
     },
-    addIngredient(ingredient, price, conterValue) {
-      this.$emit('addIngredient', mapIngredientName[ingredient], price, conterValue)
-    },
-    deleteIngredient(ingredient, price, conterValue) {
-      this.$emit('deleteIngredient', mapIngredientName[ingredient], price, conterValue)
-    },
+  },
+  computed: {
+    max() {
+      return MAX_INGREDIENT_VALUE
+    }
   }
 };
 </script>

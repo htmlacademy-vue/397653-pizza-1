@@ -20,10 +20,10 @@
         <BuilderPizzaView 
           :pizzaDoughClass="pizzaDoughClass"
           :pizzaSauceClass="pizzaSauceClass"
-          :multiplier="multiplier"
           :pizzaIngredients="pizzaIngredients"
           :ingredientPrice="ingredientPrice"
-          @drop="moveIngredient($event)"
+          :totalPrice="totalPrice"
+          @drop="addIngredient($event)"
         />
       </div>
   </form>
@@ -31,8 +31,8 @@
 
 <script>
 import pizza from '@/static/pizza.json'
-import { addIngredient, deleteIngredient } from '@/common/helpers'
-import { mapIngredientName } from '@/common/helpers'
+import { DOUGH_PRICE, SAUCE_PRICE } from '@/common/constants'
+import { addIngredient, deleteIngredient, normalizeIngredients } from '@/common/helpers'
 import BuilderDoughSelector from '@/modules/builder/components/BuilderDoughSelector'
 import BuilderSizeSelector from '@/modules/builder/components/BuilderSizeSelector'
 import BuilderIngredientsSelector from '@/modules/builder/components/BuilderIngredientsSelector'
@@ -47,7 +47,7 @@ export default {
   },
   data() {
     return {
-      ingredients: pizza.ingredients,
+      ingredients: pizza.ingredients.map(ingredient => normalizeIngredients(ingredient)),
       sauces: pizza.sauces,
       dough: pizza.dough,
       sizes: pizza.sizes,
@@ -69,19 +69,21 @@ export default {
         this.pizzaSauceClass = value
       }
     },
-    addIngredient(ingredient, price) {
-      addIngredient(ingredient, this.pizzaIngredients)
-      this.ingredientPrice += price
+    addIngredient(ingredient) {
+      addIngredient(ingredient, this.pizzaIngredients, this.ingredients)
+      this.ingredientPrice += ingredient.price
     },
-    deleteIngredient(ingredient, price) {
-      deleteIngredient(ingredient, this.pizzaIngredients)
-      this.ingredientPrice -= price
+    deleteIngredient(ingredient) {
+      deleteIngredient(ingredient, this.pizzaIngredients, this.ingredients)
+      this.ingredientPrice -= ingredient.price
     },
-    moveIngredient(active) {
-      addIngredient(mapIngredientName[active.name], this.pizzaIngredients)
-      this.ingredientPrice += active.price
-    }
+    
   },
+  computed: {
+    totalPrice() {
+      return this.multiplier * (DOUGH_PRICE + SAUCE_PRICE + this.ingredientPrice)
+    }
+  }
 }
 </script>
 

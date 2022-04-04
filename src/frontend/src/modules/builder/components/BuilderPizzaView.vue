@@ -35,8 +35,7 @@
     </div>
     <div class="content__result">
       <BuilderPriceCounter 
-        :multiplier="multiplier"
-        :ingredientPrice="ingredientPrice"
+        :totalPrice="totalPrice"
       />
       <button 
         type="button" 
@@ -67,18 +66,20 @@ export default {
       required: true
     },
 
-    multiplier: {
+    pizzaIngredients: {
+      type: Array,
+      required: true
+    },
+
+    ingredientPrice: {
       type: Number,
       required: true
     },
 
-    pizzaIngredients: {
-      type: Array
-    },
-
-    ingredientPrice: {
-      type: Number
-    },
+    totalPrice: {
+      type: Number,
+      required: true
+    }
   },
   data() {
     return {
