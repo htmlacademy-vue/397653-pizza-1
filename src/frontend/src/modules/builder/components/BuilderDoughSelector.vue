@@ -6,12 +6,11 @@
         <RadioButton
           v-for="dough in dough"
           :key="dough.name"
-          :item="dough"
           :value="getDoughValue(dough.name)"
-          :classNames="['dough__input', getDoughClass(dough.name)]"
+          :class="['dough__input', getDoughClass(dough.name)]"
           :name="'dough'"
           :isChecked="dough.id === 1"
-          @getValue="getValue"
+          @changePizza="$emit('changePizza', getDoughValue(dough.name))"
         >
           <b>{{ dough.name }}</b>
           <span>{{ dough.description }}</span>
@@ -26,6 +25,7 @@ import { mapDough } from '@/common/helpers';
 import RadioButton from '@/common/components/RadioButton'
 
 export default {
+  name: 'BuilderDoughSelector',
   components: {
     RadioButton
   },
@@ -42,10 +42,6 @@ export default {
     getDoughValue(name) {
       return mapDough[name]
     },
-    getValue(value, name) {
-      value = mapDough[value]
-      this.$emit('getValue', value, name)
-    }
   }
 };
 </script>

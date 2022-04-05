@@ -12,45 +12,45 @@
     </label>
     <div class="content__constructor">
       <AppDrop @drop="$emit('drop', $event)">
-        <div
-          :class="[
+        <div :class="[
             'pizza',
             'pizza--foundation--' + pizzaDoughClass + '-' + pizzaSauceClass,
           ]"
         >
           <div class="pizza__wrapper">
-            <div 
-              v-for="pizzaIngredient in this.pizzaIngredients" 
-              :key="pizzaIngredient.id"
-              :class="[
-                'pizza__filling', 
-                'pizza__filling--' + pizzaIngredient.ingredient,
-                pizzaIngredient.second ? 'pizza__filling--second' : '',
-                pizzaIngredient.third ? 'pizza__filling--third' : ''
-              ]"
+            <template v-for="ingredient in ingredients">
+              <div 
+                v-for="count in ingredient.count"
+                :key="`${ingredient.name}-${count}`"
+                class="pizza__filling"
+                :class="[
+                  'pizza__filling--' + getClass(ingredient.name),
+                  ingredientClasses(count)
+                  ]"
               ></div>
+            </template>
           </div>
         </div>
       </AppDrop>
     </div>
     <div class="content__result">
-      <BuilderPriceCounter 
-        :totalPrice="totalPrice"
-      />
+      <BuilderPriceCounter :totalPrice="totalPrice"/>
       <button 
         type="button" 
         class="button" 
-        :disabled="ingredientPrice === 0 || pizzaName === ''"
+        :disabled="ingredients.length === 0 || pizzaName === ''"
       >Готовьте!</button>
     </div>
   </div>
 </template>
 
 <script>
+import { mapIngredientName } from '@/common/helpers';
 import BuilderPriceCounter from '@/modules/builder/components/BuilderPriceCounter';
 import AppDrop from '@/common/components/AppDrop'
 
 export default {
+  name: 'BuilderPizzaView',
   components: {
     BuilderPriceCounter,
     AppDrop
@@ -66,24 +66,41 @@ export default {
       required: true
     },
 
-    pizzaIngredients: {
+    ingredients: {
       type: Array,
-      required: true
-    },
-
-    ingredientPrice: {
-      type: Number,
-      required: true
+      required: true,
+      default: () => []
     },
 
     totalPrice: {
       type: Number,
       required: true
-    }
+    },
   },
   data() {
     return {
       pizzaName: ''
+    }
+  },
+  methods: {
+    getClass(name) {
+      return mapIngredientName[name]
+    }
+  },
+  computed: {
+    ingredientClasses() {
+      return (number) => {
+        let className = "";
+        switch (number) {
+          case 2:
+            className = "pizza__filling--second";
+            break;
+          case 3:
+            className = "pizza__filling--third";
+            break;
+        }
+        return className;
+      };
     }
   }
 };

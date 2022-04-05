@@ -6,12 +6,11 @@
         <RadioButton
           v-for="size in sizes"
           :key="size.name"
-          :item="size"
           :value="getSizesValue(size.name)"
-          :classNames="['diameter__input', getSizesClass(size.name)]"
+          :class="['diameter__input', getSizesClass(size.name)]"
           :name="'diameter'"
           :isChecked="size.id === 2"
-          @getValue="getValue"
+          @changePizza="$emit('changePizza', size.multiplier)"
         >
           <span>{{ size.name }}</span>
         </RadioButton>
@@ -24,6 +23,7 @@
 import { mapSizes } from '@/common/helpers';
 import RadioButton from '@/common/components/RadioButton'
 export default {
+  name: 'BuilderSizeSelector',
   components: {
     RadioButton
   },
@@ -39,9 +39,6 @@ export default {
     },
     getSizesValue(name) {
       return mapSizes[name]
-    },
-    getValue(value, name, multiplier) {
-      this.$emit('getValue', value, name, multiplier)
     }
   }
 };

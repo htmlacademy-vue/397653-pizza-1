@@ -8,12 +8,11 @@
           <RadioButton
             v-for="sauce in sauces"
             :key="sauce.name"
-            :item="sauce"
             :value="getSauceValue(sauce.name)"
-            :classNames="['radio ingredients__input']"
+            :class="['radio ingredients__input']"
             :name="'sauce'"
             :isChecked="sauce.id === 1"
-            @getValue="getValue"
+            @changePizza="$emit('changePizza', getSauceValue(sauce.name))"
           >
             <span>{{ sauce.name }}</span>
           </RadioButton>
@@ -21,7 +20,6 @@
         <div class="ingredients__filling">
           <p>Начинка:</p>
           <ul class="ingredients__list">
-
             <li
               class="ingredients__item"
               v-for="ingredient in ingredients"
@@ -36,10 +34,8 @@
                 </span>
               </AppDrag>
                 <ItemCounter 
-                  @addIngredient="$emit('addIngredient', ingredient)"
-                  @deleteIngredient="$emit('deleteIngredient', ingredient)"
+                  @change="changeIngredient($event, ingredient)"
                   :ingredient="ingredient"
-                  :value="ingredient.count"
                 />
             </li>
           </ul>
@@ -57,6 +53,7 @@ import RadioButton from '@/common/components/RadioButton'
 import ItemCounter from '@/common/components/ItemCounter'
 
 export default {
+  name: 'BuilderIngredientsSelector',
   components: {
     AppDrag,
     RadioButton,
@@ -80,9 +77,9 @@ export default {
     getSauceValue(name) {
       return mapSauceName[name]
     },
-    getValue(value, name) {
-      this.$emit('getValue', value, name)
-    },
+    changeIngredient(count, ingredient) {
+      this.$emit('changeIngredient', { count, ingredient })
+    }
   },
   computed: {
     max() {
