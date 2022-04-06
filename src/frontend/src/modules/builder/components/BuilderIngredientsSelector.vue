@@ -9,7 +9,7 @@
             v-for="sauce in sauces"
             :key="sauce.name"
             :value="getSauceValue(sauce.name)"
-            :class="['radio ingredients__input']"
+            class="radio ingredients__input"
             :name="'sauce'"
             :isChecked="sauce.id === 1"
             @changePizza="$emit('changePizza', getSauceValue(sauce.name))"

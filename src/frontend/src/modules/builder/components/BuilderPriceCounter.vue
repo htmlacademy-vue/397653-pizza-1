@@ -7,7 +7,9 @@ export default {
   name: 'BuilderPriceCounter',
   props: {
     totalPrice: {
-      type: Number
+      type: Number,
+      required: true,
+      default: 0
     }
   }
 };
