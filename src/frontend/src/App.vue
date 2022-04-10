@@ -1,20 +1,21 @@
 <template>
   <div id="app">
-    <Header />
-    <main class="content">
-      <Index />
-    </main>
+    <AppLayout/>
+    <div class="content">
+      <Index/>
+    </div>
   </div>
 </template>
 
 <script>
-import Index from "@/views/Index"
-import Header from "@/views/Header"
+import AppLayout from "@/layouts/AppLayout"
+import Index from '@/views/Index';
+
 export default {
   name: "App",
   components: {
-    Index,
-    Header
+    AppLayout,
+    Index
   }
 };
 </script>
