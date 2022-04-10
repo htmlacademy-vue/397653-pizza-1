@@ -25,7 +25,7 @@
                 class="pizza__filling"
                 :class="[
                   'pizza__filling--' + getClass(ingredient.name),
-                  ingredientClasses(count)
+                  getIngredientClasses(count)
                   ]"
               ></div>
             </template>
@@ -85,24 +85,20 @@ export default {
   methods: {
     getClass(name) {
       return mapIngredientName[name]
+    },
+    getIngredientClasses(count) {
+      let className = "";
+      switch (count) {
+        case 2:
+          className = "pizza__filling--second";
+          break;
+        case 3:
+          className = "pizza__filling--third";
+          break;
+      }
+      return className;
     }
   },
-  computed: {
-    ingredientClasses() {
-      return (number) => {
-        let className = "";
-        switch (number) {
-          case 2:
-            className = "pizza__filling--second";
-            break;
-          case 3:
-            className = "pizza__filling--third";
-            break;
-        }
-        return className;
-      };
-    }
-  }
 };
 </script>
 

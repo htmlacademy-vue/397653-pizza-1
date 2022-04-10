@@ -3,22 +3,22 @@
       <div class="content__wrapper">
         <h1 class="title title--big">Конструктор пиццы</h1>
         <BuilderDoughSelector
-          :dough="this.dough"
-          @changePizza="setDought"
+          :dough="dough"
+          @changePizza="setDough"
         />
         <BuilderSizeSelector
-          :sizes="this.sizes"
+          :sizes="sizes"
           @changePizza="setSize"
         />
         <BuilderIngredientsSelector 
-          :sauces="this.sauces"
-          :ingredients="this.ingredients"
+          :sauces="sauces"
+          :ingredients="ingredients"
           @changePizza="setSauce"
           @changeIngredient="changeIngredient"
         />
         <BuilderPizzaView 
-          :pizzaDoughClass="pizzaDoughClass"
-          :pizzaSauceClass="pizzaSauceClass"
+          :pizzaDoughClass="pizzaDoughValue"
+          :pizzaSauceClass="pizzaSauceValue"
           :ingredients="ingredientsList"
           :totalPrice="totalPrice"
           @drop="changeIngredient"
@@ -30,7 +30,7 @@
 <script>
 import pizza from '@/static/pizza.json'
 import { DOUGH_PRICE, SAUCE_PRICE } from '@/common/constants'
-import { mapDough } from '@/common/helpers';
+import { mapDough, mapMultiplier } from '@/common/helpers';
 import { normalizeIngredients } from '@/common/helpers'
 import BuilderDoughSelector from '@/modules/builder/components/BuilderDoughSelector'
 import BuilderSizeSelector from '@/modules/builder/components/BuilderSizeSelector'
@@ -38,7 +38,7 @@ import BuilderIngredientsSelector from '@/modules/builder/components/BuilderIngr
 import BuilderPizzaView from '@/modules/builder/components/BuilderPizzaView'
 
 export default {
-  name: 'IndexHome',
+  name: 'Index',
   components: {
     BuilderDoughSelector,
     BuilderSizeSelector,
@@ -51,20 +51,20 @@ export default {
       sauces: pizza.sauces,
       dough: pizza.dough,
       sizes: pizza.sizes,
-      pizzaDoughClass: 'small',
-      pizzaSauceClass: 'tomato',
-      multiplier: 2
+      pizzaDoughValue: 'small',
+      pizzaSauceValue: 'tomato',
+      currentSize: '32 см'
     }
   },
   methods: {
-    setDought(value) {
-      this.pizzaDoughClass = mapDough[value]
+    setDough(value) {
+      this.pizzaDoughValue = mapDough[value]
     },
     setSauce(value) {
-      this.pizzaSauceClass = value
+      this.pizzaSauceValue = value
     },
-    setSize(value) {
-      this.multiplier = value
+    setSize(size) {
+      this.currentSize = size
     },
     changeIngredient(event) {
       let index = this.ingredients.findIndex( item => item.name === event.ingredient.name );
@@ -74,7 +74,7 @@ export default {
   computed: {
     totalPrice() {
       let ingredientPrice = this.ingredientsList.reduce((sum, ingredient) => {return sum + ingredient.price * ingredient.count}, 0);
-      return this.multiplier * (DOUGH_PRICE + SAUCE_PRICE + ingredientPrice)
+      return mapMultiplier[this.currentSize] * (DOUGH_PRICE + SAUCE_PRICE + ingredientPrice)
     },
     ingredientsList() {
       return this.ingredients.filter(item => item.count > 0);

@@ -35,7 +35,7 @@
               </AppDrag>
                 <ItemCounter 
                   @change="changeIngredient($event, ingredient)"
-                  :ingredient="ingredient"
+                  :count="ingredient.count"
                 />
             </li>
           </ul>

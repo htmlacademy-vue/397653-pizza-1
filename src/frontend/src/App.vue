@@ -2,20 +2,20 @@
   <div id="app">
     <AppLayout/>
     <div class="content">
-      <IndexHome/>
+      <Index/>
     </div>
   </div>
 </template>
 
 <script>
 import AppLayout from "@/layouts/AppLayout"
-import IndexHome from '@/views/Index';
+import Index from '@/views/Index';
 
 export default {
   name: "App",
   components: {
     AppLayout,
-    IndexHome
+    Index
   }
 };
 </script>
