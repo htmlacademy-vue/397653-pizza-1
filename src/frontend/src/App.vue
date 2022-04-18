@@ -1,21 +1,23 @@
 <template>
   <div id="app">
-    <AppLayout/>
-    <div class="content">
-      <Index/>
-    </div>
+    <AppLayout :isAuth="isAuth">
+      <router-view/>
+    </AppLayout>
   </div>
 </template>
 
 <script>
-import AppLayout from "@/layouts/AppLayout"
-import Index from '@/views/Index';
+import AppLayout from '@/layouts/AppLayout';
 
 export default {
   name: "App",
+  data() {
+    return {
+      isAuth: false
+    }
+  },
   components: {
-    AppLayout,
-    Index
+    AppLayout
   }
 };
 </script>
