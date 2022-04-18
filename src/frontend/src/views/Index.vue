@@ -1,30 +1,32 @@
 <template>
-  <form action="#" method="post">
-      <div class="content__wrapper">
-        <h1 class="title title--big">Конструктор пиццы</h1>
-        <BuilderDoughSelector
-          :dough="dough"
-          @changePizza="setDough"
-        />
-        <BuilderSizeSelector
-          :sizes="sizes"
-          @changePizza="setSize"
-        />
-        <BuilderIngredientsSelector 
-          :sauces="sauces"
-          :ingredients="ingredients"
-          @changePizza="setSauce"
-          @changeIngredient="changeIngredient"
-        />
-        <BuilderPizzaView 
-          :pizzaDoughClass="pizzaDoughValue"
-          :pizzaSauceClass="pizzaSauceValue"
-          :ingredients="ingredientsList"
-          :totalPrice="totalPrice"
-          @drop="changeIngredient"
-        />
-      </div>
-  </form>
+  <main class="content">
+    <form action="#" method="post">
+        <div class="content__wrapper">
+          <h1 class="title title--big">Конструктор пиццы</h1>
+          <BuilderDoughSelector
+            :dough="dough"
+            @changePizza="setDough"
+          />
+          <BuilderSizeSelector
+            :sizes="sizes"
+            @changePizza="setSize"
+          />
+          <BuilderIngredientsSelector 
+            :sauces="sauces"
+            :ingredients="ingredients"
+            @changePizza="setSauce"
+            @changeIngredient="changeIngredient"
+          />
+          <BuilderPizzaView 
+            :pizzaDoughClass="pizzaDoughValue"
+            :pizzaSauceClass="pizzaSauceValue"
+            :ingredients="ingredientsList"
+            :totalPrice="totalPrice"
+            @drop="changeIngredient"
+          />
+        </div>
+    </form>
+  </main>
 </template>
 
 <script>
