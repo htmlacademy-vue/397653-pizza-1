@@ -11,13 +11,13 @@
             :sizes="sizes"
             @changePizza="setSize"
           />
-          <BuilderIngredientsSelector 
+          <BuilderIngredientsSelector
             :sauces="sauces"
             :ingredients="ingredients"
             @changePizza="setSauce"
             @changeIngredient="changeIngredient"
           />
-          <BuilderPizzaView 
+          <BuilderPizzaView
             :pizzaDoughClass="pizzaDoughValue"
             :pizzaSauceClass="pizzaSauceValue"
             :ingredients="ingredientsList"
@@ -32,7 +32,7 @@
 <script>
 import pizza from '@/static/pizza.json'
 import { DOUGH_PRICE, SAUCE_PRICE } from '@/common/constants'
-import { mapDough, mapMultiplier } from '@/common/helpers';
+import { mapDough, mapMultiplier } from '@/common/helpers'
 import { normalizeIngredients } from '@/common/helpers'
 import BuilderDoughSelector from '@/modules/builder/components/BuilderDoughSelector'
 import BuilderSizeSelector from '@/modules/builder/components/BuilderSizeSelector'
