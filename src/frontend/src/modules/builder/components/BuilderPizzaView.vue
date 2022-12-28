@@ -19,14 +19,12 @@
         >
           <div class="pizza__wrapper">
             <template v-for="ingredient in ingredients">
-              <div 
+              <div
                 v-for="count in ingredient.count"
                 :key="`${ingredient.name}-${count}`"
-                class="pizza__filling"
-                :class="[
-                  'pizza__filling--' + getClass(ingredient.name),
-                  getIngredientClasses(count)
-                  ]"
+                :class="`pizza__filling pizza__filling--${
+                  ingredient.value
+                } ${getIngredientClasses(count)}`"
               ></div>
             </template>
           </div>
@@ -35,10 +33,10 @@
     </div>
     <div class="content__result">
       <BuilderPriceCounter :totalPrice="totalPrice"/>
-      <button 
-        type="button" 
-        class="button" 
-        :disabled="ingredients.length === 0 || pizzaName === ''"
+      <button
+        type="button"
+        class="button"
+        :disabled="!isDisablePriceCounter"
       >Готовьте!</button>
     </div>
   </div>
@@ -76,6 +74,11 @@ export default {
       type: Number,
       required: true
     },
+
+    isDisablePriceCounter: {
+      type: Boolean,
+      default: false
+    }
   },
   data() {
     return {

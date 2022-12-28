@@ -16,6 +16,9 @@ export default {
       isAuth: false
     }
   },
+  created() {
+    this.$store.dispatch("init");
+  },
   components: {
     AppLayout
   }
