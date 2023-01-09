@@ -12,11 +12,11 @@
       <router-link
         to="/cart"
       >
-        0 ₽
+        {{ totalPrice }} ₽
       </router-link>
     </div>
     <div class="header__user">
-      <router-link 
+      <router-link
         v-if="isAuth"
         to="/profile"
       >
@@ -41,7 +41,7 @@
         <span>Войти</span>
       </router-link>
     </div>
-    
+
   </header>
 </template>
 
@@ -52,7 +52,11 @@ export default {
     isAuth: {
       type: Boolean,
       required: true
-    }
+    },
+    totalPrice: {
+      type: Number,
+      default: 0,
+    },
   },
 }
 </script>

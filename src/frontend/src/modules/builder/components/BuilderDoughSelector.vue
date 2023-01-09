@@ -10,7 +10,7 @@
           :class="['dough__input', getDoughClass(dough.name)]"
           :name="'dough'"
           :isChecked="dough.id === 1"
-          @changePizza="$emit('changePizza', getDoughValue(dough.name))"
+          @changePizza="$emit('changePizza', dough)"
         >
           <b>{{ dough.name }}</b>
           <span>{{ dough.description }}</span>

@@ -8,11 +8,11 @@
           <RadioButton
             v-for="sauce in sauces"
             :key="sauce.name"
-            :value="getSauceValue(sauce.name)"
+            :value="sauce.value"
             class="radio ingredients__input"
             :name="'sauce'"
             :isChecked="sauce.id === 1"
-            @changePizza="$emit('changePizza', getSauceValue(sauce.name))"
+            @changePizza="$emit('changePizza', sauce)"
           >
             <span>{{ sauce.name }}</span>
           </RadioButton>
@@ -25,7 +25,7 @@
               v-for="ingredient in ingredients"
               :key="ingredient.id"
             >
-              <AppDrag 
+              <AppDrag
                 :transfer-data="ingredient"
                 :draggable="ingredient.count !== max"
               >
@@ -33,7 +33,7 @@
                   {{ ingredient.name }}
                 </span>
               </AppDrag>
-                <ItemCounter 
+                <ItemCounter
                   @change="changeIngredient($event, ingredient)"
                   :count="ingredient.count"
                 />
@@ -64,7 +64,7 @@ export default {
       type: Array,
       required: true
     },
-    
+
     ingredients: {
       type: Array,
       required: true

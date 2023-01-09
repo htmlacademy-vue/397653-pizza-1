@@ -10,7 +10,7 @@
           :class="['diameter__input', getSizesClass(size.name)]"
           :name="'diameter'"
           :isChecked="size.id === 2"
-          @changePizza="$emit('changePizza', size.name)"
+          @changePizza="$emit('changePizza', size)"
         >
           <span>{{ size.name }}</span>
         </RadioButton>

@@ -1,4 +1,7 @@
 ﻿import { DOUGH, INGREDIENTS, SAUCE, SIZE } from "./constants";
+import colaImage from "@/assets/img/cola.svg";
+import sauceImage from "@/assets/img/sauce.svg";
+import potatoImage from "@/assets/img/potato.svg";
 
 export const mapIngredientName = {
   "Грибы": "mushrooms",
@@ -36,12 +39,6 @@ export const mapSizes = {
   "45 см": "big"
 }
 
-export const mapMultiplier = {
-  "23 см": 1,
-  "32 см": 2,
-  "45 см": 3
-}
-
 export const normalizeDough = (dough) => {
   return {
     ...dough,
@@ -69,4 +66,16 @@ export const normalizeSize = (size) => {
     ...size,
     ...SIZE.find(({ name }) => size.name === name),
   };
+};
+
+let additionalImages = [colaImage, sauceImage, potatoImage];
+
+export const normilizeAdditional = (additionals) => {
+  return additionals.map((item, index) => {
+    return {
+      ...item,
+      image: additionalImages[index],
+      count: 0,
+    };
+  });
 };

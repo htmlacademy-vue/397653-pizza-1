@@ -98,11 +98,6 @@ export default {
         (item) => item.count > 0
       );
     },
-    isDisablePriceCounter(state, getters) {
-      return Boolean(
-        state.pizzaConstructor.name.length && getters.ingredientsList.length
-      );
-    },
   },
 
   mutations: {
@@ -139,7 +134,7 @@ export default {
     },
     [UPDATE_PIZZA_INGREDIENT](state, ingredientData) {
       let ingredient = state.pizzaConstructor.ingredients.find(
-        (item) => item.value === ingredientData.value
+        (item) => item.value === ingredientData.ingredient.value
       );
 
       ingredient.count = ingredientData.count;

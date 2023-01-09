@@ -1,12 +1,13 @@
 ﻿<template>
   <div class="app-layout-default">
-    <AppLayoutHeader :isAuth="isAuth"/>
+    <AppLayoutHeader :isAuth="isAuth" :totalPrice="getTotalPrice"/>
     <slot />
   </div>
 </template>
 
 <script>
 import AppLayoutHeader from '@/layouts/AppLayoutHeader';
+import { mapGetters } from "vuex";
 
 export default {
   name: 'AppLayoutDefault',
@@ -18,6 +19,9 @@ export default {
       type: Boolean,
       required: true
     }
+  },
+  computed: {
+    ...mapGetters("Cart", ["getTotalPrice"]),
   },
 };
 </script>

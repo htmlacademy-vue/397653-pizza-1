@@ -15,6 +15,8 @@ const state = () => ({});
 const actions = {
   init({ dispatch }) {
     dispatch("Builder/setPizza");
+    dispatch("Cart/setAdditional");
+    dispatch("Cart/initDelivery");
   },
 };
 

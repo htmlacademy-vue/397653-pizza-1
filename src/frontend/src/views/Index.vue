@@ -22,8 +22,8 @@
             :pizzaSauceClass="pizzaConstructor.sauce.value"
             :ingredients="ingredientsList"
             :totalPrice="pizzaPrice"
-            :isDisabled="isDisablePriceCounter"
             @drop="changeIngredient"
+            @addCart="addCart"
           />
         </div>
     </form>
@@ -35,7 +35,7 @@ import BuilderDoughSelector from '@/modules/builder/components/BuilderDoughSelec
 import BuilderSizeSelector from '@/modules/builder/components/BuilderSizeSelector'
 import BuilderIngredientsSelector from '@/modules/builder/components/BuilderIngredientsSelector'
 import BuilderPizzaView from '@/modules/builder/components/BuilderPizzaView'
-import { mapGetters, mapState, mapMutations } from 'vuex'
+import { mapGetters, mapState, mapMutations, mapActions } from 'vuex'
 import {
   SET_DOUGH,
   SET_SAUCE,
@@ -52,16 +52,20 @@ export default {
     BuilderPizzaView
   },
   methods: {
+    ...mapActions("Builder", ["post"]),
     ...mapMutations("Builder", {
       setDough: SET_DOUGH,
       setSize: SET_SIZE,
       setSauce: SET_SAUCE,
       changeIngredient: UPDATE_PIZZA_INGREDIENT,
     }),
+    addCart() {
+      this.post();
+    },
   },
   computed: {
     ...mapState('Builder', ['pizza','pizzaConstructor']),
-    ...mapGetters('Builder', ['pizzaPrice','ingredientsList','isDisablePriceCounter'])
+    ...mapGetters('Builder', ['pizzaPrice','ingredientsList'])
   }
 }
 </script>

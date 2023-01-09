@@ -8,13 +8,14 @@
         placeholder="Введите название пиццы"
         v-model="pizzaName"
         required
+        @input='setPizzaName(pizzaName)'
       />
     </label>
     <div class="content__constructor">
       <AppDrop @drop="$emit('drop', $event)">
         <div :class="[
             'pizza',
-            'pizza--foundation--' + pizzaDoughClass + '-' + pizzaSauceClass,
+            'pizza--foundation--' + doughClass + '-' + pizzaSauceClass,
           ]"
         >
           <div class="pizza__wrapper">
@@ -36,7 +37,8 @@
       <button
         type="button"
         class="button"
-        :disabled="!isDisablePriceCounter"
+        :disabled="ingredients.length === 0 || pizzaName === ''"
+        @click="$emit('addCart')"
       >Готовьте!</button>
     </div>
   </div>
@@ -46,6 +48,10 @@
 import { mapIngredientName } from '@/common/helpers';
 import BuilderPriceCounter from '@/modules/builder/components/BuilderPriceCounter';
 import AppDrop from '@/common/components/AppDrop'
+import { mapMutations } from 'vuex'
+import {
+  SET_PIZZA_NAME,
+} from "@/store/mutation-types";
 
 export default {
   name: 'BuilderPizzaView',
@@ -74,16 +80,16 @@ export default {
       type: Number,
       required: true
     },
-
-    isDisablePriceCounter: {
-      type: Boolean,
-      default: false
-    }
   },
   data() {
     return {
       pizzaName: ''
     }
+  },
+  computed: {
+    doughClass() {
+      return this.pizzaDoughClass === "large" ? "big" : "small";
+    },
   },
   methods: {
     getClass(name) {
@@ -100,7 +106,10 @@ export default {
           break;
       }
       return className;
-    }
+    },
+    ...mapMutations("Builder", {
+      setPizzaName: SET_PIZZA_NAME,
+    }),
   },
 };
 </script>
