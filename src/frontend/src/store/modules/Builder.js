@@ -36,7 +36,7 @@ export default {
       pizza.ingredients = pizza.ingredients.map((item) =>
         normalizeIngredients(item)
       );
-      pizza.dough = pizza.dough.map((item) => normalizeDough(item));
+      pizza.dough = pizza.dough.map(normalizeDough)
       pizza.sauces = pizza.sauces.map((item) => normalizeSauce(item));
       pizza.sizes = pizza.sizes.map((item) => normalizeSize(item));
 
@@ -110,12 +110,8 @@ export default {
       state.pizzaConstructor.dough = state.pizza.dough[0];
       state.pizzaConstructor.size = state.pizza.sizes[1];
       state.pizzaConstructor.sauce = state.pizza.sauces[0];
-      state.pizzaConstructor.ingredients = state.pizza.ingredients.map(
-        (item) => {
-          item.count = 0;
-          return item;
-        }
-      );
+      state.pizzaConstructor.ingredients = cloneDeep(state.pizza.ingredients).map(
+        (item) => ({ ...item, count: 0}));
     },
     [CHANGE_PIZZA](state, pizza) {
       state.pizzaConstructor = cloneDeep(pizza);

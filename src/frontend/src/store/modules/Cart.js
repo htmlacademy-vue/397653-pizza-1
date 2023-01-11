@@ -81,7 +81,7 @@ export default {
     },
     [CLEAR_CART](state) {
       state.pizzas = [];
-      state.additionals.map((item) => (item.count = 0));
+      state.additionals.forEach((item) => (item.count = 0));
     },
   },
 };
