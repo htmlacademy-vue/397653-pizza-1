@@ -1,27 +1,25 @@
 <template>
   <div id="app">
-    <AppLayout :isAuth="isAuth">
+    <AppLayout>
       <router-view/>
     </AppLayout>
   </div>
 </template>
 
 <script>
-import AppLayout from '@/layouts/AppLayout';
+import AppLayout from "@/layouts/AppLayout";
+import { setAuth } from "./common/helpers";
 
 export default {
-  name: "App",
-  data() {
-    return {
-      isAuth: false
-    }
+  components: {
+    AppLayout,
   },
   created() {
-    this.$store.dispatch("init");
+    if (this.$jwt.getToken()) {
+      setAuth(this.$store);
+    }
+    this.$store.dispatch('init');
   },
-  components: {
-    AppLayout
-  }
 };
 </script>
 

@@ -45,6 +45,7 @@
 
 <script>
 import ItemCounter from "@/common/components/ItemCounter.vue";
+import { mapActions, mapMutations } from "vuex";
 
 export default {
   components: {
@@ -57,6 +58,8 @@ export default {
     },
   },
   methods: {
+    ...mapActions("builder", ["editPizza"]),
+    ...mapMutations("cart", ["setCountPizza"]),
     ingredientsJoin(ingredients) {
       return ingredients
         .filter((ingredient) => ingredient.count > 0)
@@ -66,12 +69,13 @@ export default {
     dough(dough) {
       return dough === "light" ? "на тонком тесте" : "на толстом тесте";
     },
-    changeCountPizza(count, pizza) {
-      this.$emit("onChangeCountPizza", { count, pizza });
+    changeCountPizza(count, label) {
+      let item = { label: label, count: count };
+      this.setCountPizza(item);
     },
-    changePizza(pizza) {
-      this.$emit("onChangePizza", pizza);
-      this.$router.push("/");
+    async changePizza(pizza) {
+      this.editPizza(pizza);
+      await this.$router.push({ name: "IndexHome" });
     },
   },
 };

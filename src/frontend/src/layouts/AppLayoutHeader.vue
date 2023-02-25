@@ -12,50 +12,57 @@
       <router-link
         to="/cart"
       >
-        {{ totalPrice }} ₽
+        {{ getTotalPrice }} ₽
       </router-link>
     </div>
-    <div class="header__user">
-      <router-link
-        v-if="isAuth"
-        to="/profile"
-      >
+    <div class="header__user" style="display: flex">
+      <router-link v-if="user" to="/profile">
         <picture>
-          <source type="image/webp" srcset="@/assets/img/users/user5.webp 1x, @/assets/img/users/user5@2x.webp 2x">
-          <img src="@/assets/img/users/user5.jpg" srcset="@/assets/img/users/user5@2x.jpg" alt="Василий Ложкин" width="32" height="32">
+          <source type="image/webp" :srcset="getWebPSrc" />
+          <img
+            :src="user.avatar"
+            :srcset="getSrc"
+            alt="Василий Ложкин"
+            width="72"
+            height="72"
+          />
         </picture>
-        <span>Василий Ложкин</span>
+        <span>{{ user.name }}</span>
       </router-link>
-      <router-link
-        v-if="isAuth"
-        to="/"
+      <a
+        v-if="user"
+        key="logout-link"
+        href="#"
         class="header__logout"
+        @click="$logout"
       >
         <span>Выйти</span>
-      </router-link>
-      <router-link
-        v-if="!isAuth"
-        to="/login"
-        class="header__login"
+      </a>
+      <router-link v-else to="/login" class="header__login">
+        <span>Войти</span></router-link
       >
-        <span>Войти</span>
-      </router-link>
     </div>
-
   </header>
 </template>
 
 <script>
+import { mapGetters, mapState } from "vuex";
+import logout from "@/common/mixins/logout";
+
 export default {
   name: 'AppLayoutHeader',
-  props: {
-    isAuth: {
-      type: Boolean,
-      required: true
+  mixins: [logout],
+  computed: {
+    ...mapGetters("cart", ["getTotalPrice"]),
+    ...mapState("auth", ["user"]),
+    getWebPSrc: function () {
+      return `${this.user.avatar.replace(
+        ".jpg",
+        "@2x.webp"
+      )} 1x, ${this.user.avatar.replace(".jpg", "@4x.webp")} 2x`;
     },
-    totalPrice: {
-      type: Number,
-      default: 0,
+    getSrc: function () {
+      return `${this.user.avatar.replace(".jpg", "@4x")}.jpg`;
     },
   },
 }

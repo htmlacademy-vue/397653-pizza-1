@@ -1,22 +1,49 @@
-﻿import Vue from 'vue';
+﻿import { uniqueId } from "lodash";
+
+import Vue from 'vue';
 import Vuex from 'vuex';
-import modules from "@/store/modules";
+import VuexPlugins from "../plugins/vuexPlugins";
+
+import Builder from "@/store/modules/builder";
+import Cart from "@/store/modules/cart";
+import Orders from "@/store/modules/orders";
+import Auth from "@/store/modules/auth";
+import Addresses from "@/store/modules/addresses";
+
 import {
+  ADD_NOTIFICATION,
+  DELETE_NOTIFICATION,
   SET_ENTITY,
   ADD_ENTITY,
   UPDATE_ENTITY,
   DELETE_ENTITY,
 } from "@/store/mutation-types";
+import { MESSAGE_LIVE_TIME } from "@/common/constants.js";
 
 Vue.use(Vuex);
 
 const state = () => ({});
 
 const actions = {
-  init({ dispatch }) {
-    dispatch("Builder/setPizza");
-    dispatch("Cart/setAdditional");
-    dispatch("Cart/initDelivery");
+  async fetchUser({ commit }) {
+    const user = await this.$api.user.query();
+    commit(SET_ENTITY, { module: null, entity: "userData", value: user });
+  },
+
+  async init({ dispatch }) {
+    dispatch("fetchUser");
+  },
+
+  async createNotification({ commit }, { ...notification }) {
+    const uniqueNotification = {
+      ...notification,
+      id: uniqueId(),
+    };
+    commit(ADD_NOTIFICATION, uniqueNotification);
+    setTimeout(
+      () => commit(DELETE_NOTIFICATION, uniqueNotification.id),
+      MESSAGE_LIVE_TIME
+    );
   },
 };
 
@@ -66,5 +93,12 @@ export default new Vuex.Store({
   state,
   actions,
   mutations,
-  modules,
+  plugins: [VuexPlugins],
+  modules: {
+    builder: Builder,
+    cart: Cart,
+    orders: Orders,
+    auth: Auth,
+    addresses: Addresses,
+  },
 });

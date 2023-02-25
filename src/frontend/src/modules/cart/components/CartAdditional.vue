@@ -30,6 +30,7 @@
 
 <script>
 import ItemCounter from "@/common/components/ItemCounter.vue";
+import { mapMutations } from "vuex";
 
 export default {
   name: "CartAdditional",
@@ -43,8 +44,10 @@ export default {
     },
   },
   methods: {
-    changeCountAdditional(count, item) {
-      this.$emit("onChangeAdditional", { count, item });
+    ...mapMutations("Сart", ["setCountMisc"]),
+    changeCountAdditional(label, count) {
+      let item = { label: label, count: count };
+      this.setCountMisc(item);
     },
   },
 };

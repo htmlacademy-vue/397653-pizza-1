@@ -2,7 +2,7 @@
   <section class="footer">
     <div class="footer__more">
       <router-link to="/" class="button button--border button--arrow">
-        <span @click="$emit('createNewPizza')">Хочу еще одну</span>
+        <span>Хочу еще одну</span>
       </router-link>
     </div>
     <p class="footer__text">

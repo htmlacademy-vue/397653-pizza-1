@@ -1,8 +1,5 @@
 ﻿<template>
-  <component
-    :is="layout"
-    :isAuth="isAuth"
-  >
+  <component :is="layout">
     <slot />
   </component>
 </template>
@@ -13,12 +10,6 @@ const defaultLayout = 'AppLayoutDefault';
 
 export default {
   name: 'AppLayout',
-  props: {
-    isAuth: {
-      type: Boolean,
-      required: true
-    }
-  },
   computed: {
     layout() {
       const layout = this.$route.meta.layout || defaultLayout;

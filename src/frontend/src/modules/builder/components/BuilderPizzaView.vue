@@ -8,7 +8,7 @@
         placeholder="Введите название пиццы"
         v-model="pizzaName"
         required
-        @input='setPizzaName(pizzaName)'
+        @change='setPizzaName(pizzaName)'
       />
     </label>
     <div class="content__constructor">
@@ -49,9 +49,6 @@ import { mapIngredientName } from '@/common/helpers';
 import BuilderPriceCounter from '@/modules/builder/components/BuilderPriceCounter';
 import AppDrop from '@/common/components/AppDrop'
 import { mapMutations } from 'vuex'
-import {
-  SET_PIZZA_NAME,
-} from "@/store/mutation-types";
 
 export default {
   name: 'BuilderPizzaView',
@@ -92,6 +89,7 @@ export default {
     },
   },
   methods: {
+    ...mapMutations("builder", ["setCurrentPizzaName"]),
     getClass(name) {
       return mapIngredientName[name]
     },
@@ -107,9 +105,9 @@ export default {
       }
       return className;
     },
-    ...mapMutations("Builder", {
-      setPizzaName: SET_PIZZA_NAME,
-    }),
+    setName(val) {
+      this.setCurrentPizzaName(val);
+    },
   },
 };
 </script>

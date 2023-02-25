@@ -11,12 +11,9 @@
         </div>
         <CartList
           :pizzas="getPizzas"
-          @onChangeCountPizza="changeCountPizza"
-          @onChangePizza="changePizza"
         ></CartList>
         <CartAdditional
           :additionals="additionals"
-          @onChangeAdditional="changeAdditional"
         ></CartAdditional>
         <CartForm :delivery="delivery"></CartForm>
       </div>
@@ -25,7 +22,6 @@
     <CartFooter
       :totalPrice="getTotalPrice"
       @createOrder="showModal = true"
-      @createNewPizza="createNewPizza"
     ></CartFooter>
   </div>
 </template>
@@ -38,15 +34,7 @@ import CartForm from "@/modules/cart/components/CartForm";
 import CartFooter from "@/modules/cart/components/CartFooter";
 import CartPopup from "@/modules/cart/components/CartPopup";
 
-import {
-  UPDATE_COUNT_ADDITIONAL,
-  UPDATE_COUNT_PIZZA,
-  CHANGE_PIZZA,
-  SET_PIZZA,
-  CLEAR_CART,
-} from "@/store/mutation-types";
-
-import { mapGetters, mapMutations, mapState } from "vuex";
+import { mapGetters, mapState } from "vuex";
 
 export default {
   name: "Cart",
@@ -63,22 +51,15 @@ export default {
     };
   },
   computed: {
-    ...mapGetters("Cart", ["getPizzas", "getTotalPrice"]),
-    ...mapState("Cart", ["additionals", "delivery"]),
+    ...mapGetters("cart", ["getPizzas", "getTotalPrice"]),
+    ...mapState("cart", ["additionals", "delivery"]),
+    ...mapState("auth", ["user"]),
   },
   methods: {
-    ...mapMutations("Cart", {
-      changeAdditional: UPDATE_COUNT_ADDITIONAL,
-      changeCountPizza: UPDATE_COUNT_PIZZA,
-      clearCart: CLEAR_CART,
-    }),
-    ...mapMutations("Builder", {
-      changePizza: CHANGE_PIZZA,
-      createNewPizza: SET_PIZZA,
-    }),
     closePopup() {
-      this.createNewPizza();
-      this.clearCart();
+      if (this.user !== null) {
+        this.$router.push({ name: "Orders" });
+      } else this.$router.push({ name: "IndexHome" });
     },
   },
 };
