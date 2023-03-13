@@ -42,12 +42,12 @@ export default {
         const data = await this.$api.auth.getMe();
         commit(
           SET_ENTITY,
-          { module: 'Auth', entity: 'isAuthenticated', value: true },
+          { module: 'auth', entity: 'isAuthenticated', value: true },
           { root: true }
         );
         commit(
           SET_ENTITY,
-          { module: 'Auth', entity: 'user', value: data },
+          { module: 'auth', entity: 'user', value: data },
           { root: true }
         );
       } catch {

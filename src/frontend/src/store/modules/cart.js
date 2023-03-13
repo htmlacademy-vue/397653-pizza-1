@@ -1,8 +1,7 @@
 ﻿import { ADD_ENTITY, SET_ENTITY, UPDATE_ENTITY } from "../mutation-types";
 import { RESET_CART_STATE } from "../mutation-types";
-import { uniqueId } from "lodash";
 
-import { normalizeAdditionalItems } from "@/common/helpers.js";
+import { normalizeAdditionalItems, createUUIDv4 } from "@/common/helpers.js";
 
 const initialState = () => ({
   misc: [],
@@ -12,6 +11,7 @@ const initialState = () => ({
 
 export default {
   namespaced: true,
+
   state: initialState(),
   getters: {
     getPizza(state) {
@@ -37,14 +37,14 @@ export default {
   mutations: {
     setCountMisc(state, item) {
       state.misc.forEach((el) => {
-        if (item.label === el.label) {
+        if (item.label.label === el.label) {
           el.count = item.count;
         }
       });
     },
     setCountPizza(state, item) {
       state.pizza.forEach((el) => {
-        if (item.label === el.label) {
+        if (item.label.label === el.label) {
           el.count = item.count;
         }
       });
@@ -80,7 +80,7 @@ export default {
         {
           module: "cart",
           entity: "pizza",
-          value: pizza.id ? pizza : { ...pizza, id: uniqueId() },
+          value: pizza.id ? pizza : { ...pizza, id: createUUIDv4() },
         },
         { root: true }
       );

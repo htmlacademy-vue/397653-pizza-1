@@ -28,13 +28,10 @@ export default {
     getPrice(state) {
       var sumPrice = 0;
       for (let i = 0; i < state.ingredientsItems.length; i++) {
-        sumPrice =
-          sumPrice +
-          state.ingredientsItems[i].count * state.ingredientsItems[i].price;
+        sumPrice = sumPrice + state.ingredientsItems[i].count * state.ingredientsItems[i].price;
       }
       return (
-        (state.currentDough.price + state.currentSauce.price + sumPrice) *
-        state.currentSize.multiplier
+        (state.currentDough.price + state.currentSauce.price + sumPrice) * state.currentSize.multiplier
       );
     },
     labeledIngredients(state) {
@@ -71,16 +68,14 @@ export default {
   mutations: {
     setCountIngredients(state, item) {
       state.ingredientsItems.map((el) => {
-        if (item.label === el.label) {
+        if (item.label.label === el.label) {
           el.count = item.count;
         }
       });
     },
-
     setCurrentDough(state, value) {
       state.currentDough = value;
     },
-
     setCurrentSauce(state, value) {
       state.currentSauce = value;
     },
@@ -93,7 +88,6 @@ export default {
     [RESET_BUILDER_STATE](state) {
       Object.assign(state, initialState());
     },
-
     [EDIT_PIZZA](state, newState) {
       Object.assign(state, newState);
     },
@@ -138,10 +132,11 @@ export default {
     },
     async getSizesData({ state, commit }) {
       const data = await this.$api.builder.fetchSizes();
+      const items = data.map((item) => normalizeItems(item));
 
       commit(
         SET_ENTITY,
-        { module: "builder", entity: "sizes", value: data },
+        { module: "builder", entity: "sizes", value: items },
         { root: true }
       );
       if (isEmpty(state.currentSize)) {
@@ -152,7 +147,6 @@ export default {
         );
       }
     },
-
     async getIngredientsData({ commit }) {
       const data = await this.$api.builder.fetchIngredients();
       const items = data.map((item) => normalizeIngredientsItems(item));
@@ -162,7 +156,6 @@ export default {
         { root: true }
       );
     },
-
     editPizza({ state, commit }, pizza) {
       const newState = {
         namePizza: pizza.label,

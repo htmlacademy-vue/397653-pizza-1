@@ -84,7 +84,6 @@ export default {
   },
   methods: {
     ...mapActions("orders", ["deleteOrder"]),
-    ...mapActions("orders", ["createOrder"]),
     ...mapActions("cart", ["setPizzaSettingsForCart"]),
     ...mapActions("cart", ["changeMiscItemQuantity"]),
     getOrderPrice(pizzas, misc) {

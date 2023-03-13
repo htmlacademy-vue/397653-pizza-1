@@ -6,13 +6,13 @@
         <div class="ingredients__sauce">
           <p>Основной соус:</p>
           <RadioButton
-            v-for="sauce in sauces"
+            v-for="sauce in labeledlSauces"
             :key="sauce.name"
-            :value="sauce.value"
+            :value="sauce.label"
             class="radio ingredients__input"
             :name="'sauce'"
-            :isChecked="sauce.id === 1"
-            @changePizza="$emit('changePizza', sauce)"
+            :isChecked="currentSauce.id === sauce.id"
+            @changePizza="changeSauce(sauce)"
           >
             <span>{{ sauce.name }}</span>
           </RadioButton>
@@ -22,7 +22,7 @@
           <ul class="ingredients__list">
             <li
               class="ingredients__item"
-              v-for="ingredient in ingredients"
+              v-for="ingredient in ingredientsItems"
               :key="ingredient.id"
             >
               <AppDrag
@@ -33,10 +33,10 @@
                   {{ ingredient.name }}
                 </span>
               </AppDrag>
-                <ItemCounter
-                  @change="changeIngredient($event, ingredient)"
-                  :count="ingredient.count"
-                />
+              <ItemCounter
+                @change="changeIngredient($event, ingredient)"
+                :count="ingredient.count"
+              />
             </li>
           </ul>
         </div>
@@ -46,11 +46,13 @@
 </template>
 
 <script>
-import { mapIngredientName, mapSauceName } from '@/common/helpers'
+import { mapIngredientName } from '@/common/enums/pizzaIngredientName'
+import { mapSauceName } from '@/common/enums/pizzaSauceName'
 import { MAX_INGREDIENT_VALUE } from '@/common/constants'
 import AppDrag from '@/common/components/AppDrag';
 import RadioButton from '@/common/components/RadioButton'
 import ItemCounter from '@/common/components/ItemCounter'
+import { mapState, mapGetters, mapMutations } from "vuex";
 
 export default {
   name: 'BuilderIngredientsSelector',
@@ -59,18 +61,8 @@ export default {
     RadioButton,
     ItemCounter
   },
-  props: {
-    sauces: {
-      type: Array,
-      required: true
-    },
-
-    ingredients: {
-      type: Array,
-      required: true
-    }
-  },
   methods: {
+    ...mapMutations("builder", ["setCurrentSauce", "setCountIngredients"]),
     getIngredientClass(name) {
       return 'filling--' + mapIngredientName[name]
     },
@@ -78,10 +70,16 @@ export default {
       return mapSauceName[name]
     },
     changeIngredient(count, ingredient) {
-      this.$emit('changeIngredient', { count, ingredient })
-    }
+      let item = { label: ingredient, count: count };
+      this.setCountIngredients(item);
+    },
+    changeSauce(sauce) {
+      this.setCurrentSauce(sauce);
+    },
   },
   computed: {
+    ...mapGetters("builder", ["labeledlSauces"]),
+    ...mapState("builder", ["currentSauce", "ingredientsItems"]),
     max() {
       return MAX_INGREDIENT_VALUE
     }

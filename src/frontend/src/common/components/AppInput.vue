@@ -22,10 +22,6 @@
 <script>
 export default {
   name: "AppInput",
-  model: {
-    prop: "value",
-    event: "input",
-  },
   props: {
     value: {
       type: [String, Number],

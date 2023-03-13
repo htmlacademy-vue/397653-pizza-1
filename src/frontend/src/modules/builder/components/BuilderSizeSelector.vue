@@ -9,8 +9,8 @@
           :value="getSizesValue(size.name)"
           :class="['diameter__input', getSizesClass(size.name)]"
           :name="'diameter'"
-          :isChecked="size.id === 2"
-          @changePizza="$emit('changePizza', size)"
+          :isChecked="size.id === currentSize.id"
+          @changePizza="changeSize(size)"
         >
           <span>{{ size.name }}</span>
         </RadioButton>
@@ -20,26 +20,29 @@
 </template>
 
 <script>
-import { mapSizes } from '@/common/helpers';
+import { mapSizes } from '@/common/enums/pizzaSizes'
 import RadioButton from '@/common/components/RadioButton'
+import { mapState, mapMutations } from "vuex";
+
 export default {
   name: 'BuilderSizeSelector',
   components: {
     RadioButton
   },
-  props: {
-    sizes: {
-      type: Array,
-      required: true
-    }
+  computed: {
+    ...mapState("builder", ["sizes", "currentSize"]),
   },
   methods: {
+    ...mapMutations("builder", ["setCurrentSize"]),
     getSizesClass(name) {
       return 'diameter__input--' + mapSizes[name]
     },
     getSizesValue(name) {
       return mapSizes[name]
-    }
+    },
+    changeSize(size) {
+      this.setCurrentSize(size);
+    },
   }
 };
 </script>

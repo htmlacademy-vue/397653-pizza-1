@@ -22,7 +22,7 @@ export const createResources = (notifier) => {
 
 export const setAuth = (store) => {
   store.$api.auth.setAuthHeader();
-  store.dispatch("Auth/getMe");
+  store.dispatch("auth/getMe");
 };
 
 export const getItemById = (list, id) => {
@@ -35,42 +35,6 @@ export const isEmpty = (obj) => {
   }
   return true;
 };
-
-export const mapIngredientName = {
-  "Грибы": "mushrooms",
-  "Чеддер": "cheddar",
-  "Салями": "salami",
-  "Ветчина": "ham",
-  "Ананас": "ananas",
-  "Бекон": "bacon",
-  "Лук": "onion",
-  "Чили": "chile",
-  "Халапеньо": "jalapeno",
-  "Маслины": "olives",
-  "Томаты": "tomatoes",
-  "Лосось": "salmon",
-  "Моцарелла": "mozzarella",
-  "Пармезан": "parmesan",
-  "Блю чиз": "blue_cheese"
-}
-
-export const mapSauceName = {
-  "Томатный": "tomato",
-  "Сливочный": "creamy"
-}
-
-export const mapDough = {
-  "Тонкое": "light",
-  "Толстое": "large",
-  "light": "small",
-  "large": "big"
-}
-
-export const mapSizes = {
-  "23 см": "small",
-  "32 см": "normal",
-  "45 см": "big"
-}
 
 export const normalizeDough = (dough) => {
   return {
@@ -132,5 +96,14 @@ export const normilizeAdditional = (additionals) => {
       image: additionalImages[index],
       count: 0,
     };
+  });
+};
+
+export const createUUIDv4 = () => {
+  return "xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx".replace(/[xy]/g, (c) => {
+    const r = (Math.random() * 16) | 0,
+      v = c === "x" ? r : (r & 0x3) | 0x8;
+
+    return v.toString(16);
   });
 };

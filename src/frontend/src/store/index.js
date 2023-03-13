@@ -22,16 +22,17 @@ import { MESSAGE_LIVE_TIME } from "@/common/constants.js";
 
 Vue.use(Vuex);
 
-const state = () => ({});
+const state = () => ({
+  notifications: [],
+  user: null,
+});
 
 const actions = {
-  async fetchUser({ commit }) {
-    const user = await this.$api.user.query();
-    commit(SET_ENTITY, { module: null, entity: "userData", value: user });
-  },
-
   async init({ dispatch }) {
-    dispatch("fetchUser");
+    dispatch("builder/getIngredientsData");
+    dispatch("builder/getDoughData");
+    dispatch("builder/getSizesData");
+    dispatch("builder/getSaucesData");
   },
 
   async createNotification({ commit }, { ...notification }) {
@@ -48,6 +49,16 @@ const actions = {
 };
 
 const mutations = {
+  [ADD_NOTIFICATION](state, notification) {
+    state.notifications = [...state.notifications, notification];
+  },
+
+  [DELETE_NOTIFICATION](state, id) {
+    state.notifications = state.notifications.filter(
+      notification => notification.id !== id
+    );
+  },
+
   [SET_ENTITY](state, { module, entity, value }) {
     module ? (state[module][entity] = value) : (state[entity] = value);
   },
