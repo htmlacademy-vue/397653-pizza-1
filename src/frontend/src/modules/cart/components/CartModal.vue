@@ -26,7 +26,9 @@ export default {
       this.resetCartState()
       if (this.user !== null) {
         this.$router.push({ name: "Orders" });
-      } else this.$router.push({ name: "IndexHome" });
+      } else {
+        this.$router.push({ name: "IndexHome" });
+      }
     },
   },
 };

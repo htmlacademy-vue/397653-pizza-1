@@ -49,7 +49,7 @@
             </li>
           </ul>
 
-          <div class="cart__additional">
+          <div v-if="getPizza.length > 0" class="cart__additional">
             <ul class="additional-list">
               <li
                 v-for="item in labeledMisc"
@@ -78,6 +78,7 @@
           </div>
 
           <CartForm
+            v-if="getPizza.length > 0"
             @setAddress="setAddress"
             :reorderAddressId="addressId"
           ></CartForm>
@@ -145,18 +146,13 @@ export default {
     await this.getMiscData()
   },
   computed: {
-    ...mapGetters("cart", ["labeledMisc", "getPizza", "getPriceMisc"]),
+    ...mapGetters("cart", ["labeledMisc", "getPizza", "getPriceMisc", "getPricePizzas"]),
     ...mapState("auth", ["user"]),
     ...mapState("addresses", ["addresses"]),
     ...mapState("cart", ["misc"]),
     resultPrice() {
-      let pricePizza = 0;
-      for (let i = 0; i < this.getPizza.length; i++) {
-        pricePizza =
-          pricePizza + this.getPizza[i].price * this.getPizza[i].count;
-      }
-      this.setTotalPrice(pricePizza + this.getPriceMisc);
-      return pricePizza + this.getPriceMisc;
+      this.setTotalPrice(this.getPricePizzas + this.getPriceMisc);
+      return this.getPricePizzas + this.getPriceMisc;
     },
   },
   methods: {

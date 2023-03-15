@@ -12,7 +12,7 @@
             class="radio ingredients__input"
             :name="'sauce'"
             :isChecked="currentSauce.id === sauce.id"
-            @changePizza="changeSauce(sauce)"
+            @changePizza="setCurrentSauce(sauce)"
           >
             <span>{{ sauce.name }}</span>
           </RadioButton>
@@ -36,6 +36,8 @@
               <ItemCounter
                 @change="changeIngredient($event, ingredient)"
                 :count="ingredient.count"
+                :disabledMin="ingredient.count === min"
+                :disabledMax="ingredient.count === max"
               />
             </li>
           </ul>
@@ -48,7 +50,7 @@
 <script>
 import { mapIngredientName } from '@/common/enums/pizzaIngredientName'
 import { mapSauceName } from '@/common/enums/pizzaSauceName'
-import { MAX_INGREDIENT_VALUE } from '@/common/constants'
+import { MIN_INGREDIENT_VALUE, MAX_INGREDIENT_VALUE } from '@/common/constants'
 import AppDrag from '@/common/components/AppDrag';
 import RadioButton from '@/common/components/RadioButton'
 import ItemCounter from '@/common/components/ItemCounter'
@@ -73,15 +75,15 @@ export default {
       let item = { label: ingredient, count: count };
       this.setCountIngredients(item);
     },
-    changeSauce(sauce) {
-      this.setCurrentSauce(sauce);
-    },
   },
   computed: {
     ...mapGetters("builder", ["labeledlSauces"]),
     ...mapState("builder", ["currentSauce", "ingredientsItems"]),
     max() {
       return MAX_INGREDIENT_VALUE
+    },
+    min() {
+      return MIN_INGREDIENT_VALUE
     }
   }
 };

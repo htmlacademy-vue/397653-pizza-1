@@ -28,7 +28,7 @@
             <img
               :src="user.avatar"
               :srcset="getSrc"
-              alt="Василий Ложкин"
+              :alt="user.name"
               width="72"
               height="72"
             />

@@ -32,8 +32,9 @@ export default {
       required: true,
     },
     type: {
-      type: String,
-      default: "text",
+      validator: function (value) {
+        return ['text', 'email', 'password'].includes(value)
+      }
     },
     placeholder: {
       type: String,

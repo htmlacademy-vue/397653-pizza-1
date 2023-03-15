@@ -11,6 +11,12 @@ export default {
     getUserAttribute: state => attr => state.user ? state.user[attr] : ''
   },
 
+  mutations: {
+    setAuthentification(state, value) {
+      state.isAuthenticated = value
+    }
+  },
+
   actions: {
     async login({ dispatch }, credentials) {
       const data = await this.$api.auth.login(credentials);
@@ -25,11 +31,7 @@ export default {
       }
       this.$jwt.destroyToken();
       this.$api.auth.setAuthHeader();
-      commit(
-        SET_ENTITY,
-        { module: 'auth', entity: 'isAuthenticated', value: false },
-        { root: true }
-      );
+      commit('setAuthentification', false)
       commit(
         SET_ENTITY,
         { module: 'auth', entity: 'user', value: null },

@@ -11,12 +11,12 @@
 
       <form @submit="deleteOrder(order.id)">
         <div class="order__button">
-          <button type="submit" class="button button--border">Удалить</button>
+          <button type="button" class="button button--border">Удалить</button>
         </div>
       </form>
 
       <div class="order__button">
-        <button @click="repeatOrder()" class="button">Повторить</button>
+        <button type="button" @click="repeatOrder()" class="button">Повторить</button>
       </div>
     </div>
 
@@ -111,28 +111,22 @@ export default {
       this.pizzas.forEach((pizza) => {
         let pizzaState = this.$store.state.builder;
         var currentPizzaIngredientsNames = [];
-        const currentPizzaIngredients = pizza.ingredients.map((item) => {
-          return {
-            ...getItemById(pizzaState.ingredientsItems, item.ingredientId),
-            count: item.quantity,
-          };
-        });
+        var currentPizzaIngredients = [];
+        for (let i = 0; i < pizza.ingredients.length; i++) {
+          currentPizzaIngredients.push(pizza.ingredients[i]);
+          currentPizzaIngredientsNames.push(
+            " " + getItemById(pizzaState.ingredientsItems, pizza.ingredients[i].ingredientId).name.toLowerCase()
+          );
+        }
         let objectPizza = {
           ingredients: currentPizzaIngredients,
           label: pizza.name,
           dough: getItemById(pizzaState.dough, pizza.doughId),
           sauce: getItemById(pizzaState.sauces, pizza.sauceId),
           size: getItemById(pizzaState.sizes, pizza.sizeId),
-          description: ` ${getItemById(
-            pizzaState.sizes,
-            pizza.sizeId
-          ).name.toLowerCase()} Тесто: ${getItemById(
-            pizzaState.dough,
-            pizza.doughId
-          ).name.toLowerCase()} Соус: ${getItemById(
-            pizzaState.sauces,
-            pizza.sauceId
-          ).name.toLowerCase()} Начинка:${currentPizzaIngredientsNames}`,
+          description: [` ${getItemById(pizzaState.sizes, pizza.sizeId).name.toLowerCase()}, на ${getItemById(pizzaState.dough, pizza.doughId).name.toLowerCase().slice(0, -1)}м тесте`,
+          `Соус: ${getItemById(pizzaState.sauces, pizza.sauceId).name.toLowerCase()} `,
+          `Начинка:${currentPizzaIngredientsNames}`],
           price: pizza.price,
           count: pizza.quantity,
         };

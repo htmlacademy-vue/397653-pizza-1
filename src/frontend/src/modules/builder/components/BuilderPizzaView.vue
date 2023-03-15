@@ -138,8 +138,6 @@ export default {
       this.misc.forEach((misc) => {
         this.changeMiscItemQuantity({ ...misc, quantity: 0 });
       });
-
-      //this.$router.push("Cart");
     },
   },
 };

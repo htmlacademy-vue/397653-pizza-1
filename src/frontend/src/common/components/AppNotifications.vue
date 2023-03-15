@@ -16,7 +16,7 @@
 <script>
 import { mapState } from 'vuex';
 export default {
-  name: 'Notifications',
+  name: 'AppNotifications',
   computed: {
     ...mapState(['notifications'])
   }
@@ -30,12 +30,12 @@ export default {
   max-width: 100%;
   padding: 20px;
   text-align: center;
-  color: $white-900;
+  color: $white;
   border-bottom: 2px solid transparent;
   &__wrapper {
     position: fixed;
     z-index: 9999;
-    top: $header-height;
+    top: 0;
     right: 0;
     width: 420px;
     padding: 10px;

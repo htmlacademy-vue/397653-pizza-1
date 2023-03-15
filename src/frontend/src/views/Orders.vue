@@ -44,10 +44,7 @@ export default {
     await this.fetchOrders();
   },
   methods: {
-    ...mapActions("builder", ["getSaucesData"]),
-    ...mapActions("builder", ["getDoughData"]),
-    ...mapActions("builder", ["getSizesData"]),
-    ...mapActions("builder", ["getIngredientsData"]),
+    ...mapActions("builder", ["getSaucesData", "getDoughData", "getSizesData", "getIngredientsData"]),
     ...mapActions("cart", ["getMiscData"]),
     ...mapActions("orders", ["fetchOrders"]),
   },

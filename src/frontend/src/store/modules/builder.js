@@ -43,25 +43,11 @@ export default {
       return state.ingredientsItems;
     },
     labeledDough(state) {
-      state.dough.forEach((el) => {
-        if (el.name == "Толстое") {
-          el.label = "big";
-        }
-        if (el.name == "Тонкое") {
-          el.label = "small";
-        }
-      });
+      state.dough.map((item) => { item.label = item.name == "Толстое" ? "big" : "small" });
       return state.dough;
     },
     labeledlSauces(state) {
-      state.sauces.forEach((el) => {
-        if (el.name == "Томатный") {
-          el.label = "tomato";
-        }
-        if (el.name == "Сливочный") {
-          el.label = "creamy";
-        }
-      });
+      state.sauces.map((item) => { item.label = item.name == "Томатный" ? "tomato" : "creamy" });
       return state.sauces;
     },
   },

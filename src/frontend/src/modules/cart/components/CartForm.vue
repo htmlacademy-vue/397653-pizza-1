@@ -43,6 +43,7 @@
               type="text"
               name="street"
               :error-text="validations.street.error"
+              :disabled="disabledInputs"
               @change="setOrderAddress"
             />
           </label>
@@ -56,6 +57,7 @@
               type="text"
               name="building"
               :error-text="validations.building.error"
+              :disabled="disabledInputs"
               @change="setOrderAddress"
             />
           </label>
@@ -68,6 +70,7 @@
               v-model="flat"
               type="text"
               name="flat"
+              :disabled="disabledInputs"
               @change="setOrderAddress"
             />
           </label>
@@ -101,6 +104,7 @@ export default {
       flat: "",
       comment: "",
       addressFormName: "Новый адрес",
+      disabledInputs: false,
       validations: {
         street: {
           error: "",
@@ -145,6 +149,7 @@ export default {
     ...mapActions("addresses", ["getAddresses", "resetAddressesState"]),
     changeAddress(value) {
       this.deliveryOption = value;
+      this.disabledInputs = false;
       if (value === "newAddress") {
         this.addressId = null;
         this.street = "";
@@ -160,6 +165,7 @@ export default {
         this.flat = address.flat;
         this.comment = address.comment;
         this.addressFormName = "Адрес";
+        this.disabledInputs = true;
       }
       this.setOrderAddress();
     },

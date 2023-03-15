@@ -1,7 +1,8 @@
 ﻿import { ADD_ENTITY, SET_ENTITY, UPDATE_ENTITY } from "../mutation-types";
 import { RESET_CART_STATE } from "../mutation-types";
+import { uniqueId } from "lodash";
 
-import { normalizeAdditionalItems, createUUIDv4 } from "@/common/helpers.js";
+import { normalizeAdditionalItems } from "@/common/helpers.js";
 
 const initialState = () => ({
   misc: [],
@@ -25,6 +26,15 @@ export default {
         el.label = el.image.replace(".svg", "").replace("/public/img/", "");
       });
       return state.misc;
+    },
+    getPricePizzas(state) {
+      var sumPricePizzas = 0;
+      if(state.pizza.length > 0) {
+        for (let i = 0; i < state.pizza.length; i++) {
+          sumPricePizzas = sumPricePizzas + state.pizza[i].count * state.pizza[i].price;
+        }
+      }
+      return sumPricePizzas;
     },
     getPriceMisc(state) {
       var sumPriceMisc = 0;
@@ -80,7 +90,7 @@ export default {
         {
           module: "cart",
           entity: "pizza",
-          value: pizza.id ? pizza : { ...pizza, id: createUUIDv4() },
+          value: pizza.id ? pizza : { ...pizza, id: uniqueId() },
         },
         { root: true }
       );

@@ -2,7 +2,6 @@
   <div :key="address.id" class="layout__address">
     <form
       class="address-form address-form--opened sheet"
-      @submit.prevent="saveAddress"
     >
       <div class="address-form__header">
         <b>{{ title }}</b>
@@ -12,7 +11,7 @@
         <div class="address-form__input">
           <label class="input">
             <span>Название адреса*</span>
-            <input
+            <AppInput
               v-model="name"
               type="text"
               name="addr-name"
@@ -24,7 +23,7 @@
         <div class="address-form__input address-form__input--size--normal">
           <label class="input">
             <span>Улица*</span>
-            <input
+            <AppInput
               v-model="street"
               type="text"
               name="addr-street"
@@ -36,7 +35,7 @@
         <div class="address-form__input address-form__input--size--small">
           <label class="input">
             <span>Дом*</span>
-            <input
+            <AppInput
               v-model="building"
               type="text"
               name="addr-house"
@@ -48,7 +47,7 @@
         <div class="address-form__input address-form__input--size--small">
           <label class="input">
             <span>Квартира</span>
-            <input
+            <AppInput
               v-model="flat"
               type="text"
               name="addr-apartment"
@@ -59,7 +58,7 @@
         <div class="address-form__input">
           <label class="input">
             <span>Комментарий</span>
-            <input
+            <AppInput
               v-model="comment"
               type="text"
               name="addr-comment"
@@ -72,13 +71,17 @@
       <div class="address-form__buttons">
         <button
           v-if="isAddressEdited"
-          type="submit"
+          type="button"
           class="button button--transparent"
           @click="deleteAddress(address.id)"
         >
           Удалить
         </button>
-        <button type="submit" class="button">Сохранить</button>
+        <button
+          type="submit"
+          class="button"
+          @click="saveAddress"
+          >Сохранить</button>
       </div>
     </form>
   </div>
@@ -133,7 +136,7 @@ export default {
   methods: {
     ...mapActions("addresses", ["addAddress", "editAddress", "deleteAddress"]),
 
-    saveAddress($event) {
+    saveAddress() {
       const address = {
         ...this.address,
         name: this.name,
@@ -149,8 +152,6 @@ export default {
       } else {
         this.addAddress(address);
       }
-
-      $event.target.submit();
     },
   },
 };

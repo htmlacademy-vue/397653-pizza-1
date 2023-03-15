@@ -1,5 +1,4 @@
-﻿/* eslint-disable */
-import { emailRegex } from "@/common/constants";
+﻿import { emailRegex } from "@/common/constants";
 
 const rules = {
   required: {
@@ -9,7 +8,7 @@ const rules = {
 
   email: {
     rule: (value) =>
-      value ? emailRegex.test(String(value).toLowerCase()) : true,
+      value ? emailRegex.test(String(value), "i") : true,
     message: "Электронная почта имеет неверный формат",
   },
 };
@@ -58,4 +57,3 @@ export default {
     },
   },
 };
-/* eslint-enable */

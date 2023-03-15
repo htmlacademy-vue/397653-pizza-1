@@ -41,11 +41,9 @@
 <script>
 import validator from "@/common/mixins/validator";
 import { mapActions } from "vuex";
-import AppInput from "@/common/components/AppInput";
 export default {
   name: "Login",
   mixins: [validator],
-  components: { AppInput },
   data() {
     return {
       email: "",

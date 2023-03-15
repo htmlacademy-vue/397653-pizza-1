@@ -1,8 +1,5 @@
 ﻿import {
-  ADD_ENTITY,
-  DELETE_ENTITY,
   SET_ENTITY,
-  UPDATE_ENTITY,
 } from "../mutation-types";
 
 export default {
@@ -22,44 +19,19 @@ export default {
         { root: true }
       );
     },
-    async deleteAddress({ commit }, id) {
-      const data = await this.$api.addresses.delete(id);
-      commit(
-        DELETE_ENTITY,
-        {
-          module: "addresses",
-          entity: "addresses",
-          value: data,
-        },
-        { root: true }
-      );
+    async deleteAddress({ dispatch }, id) {
+      await this.$api.addresses.delete(id);
+      dispatch('getAddresses');
     },
 
-    async editAddress({ commit }, address) {
+    async editAddress({ dispatch }, address) {
       await this.$api.addresses.put(address);
-      commit(
-        UPDATE_ENTITY,
-        {
-          module: "addresses",
-          entity: "addresses",
-          value: address,
-        },
-        { root: true }
-      );
+      dispatch('getAddresses');
     },
 
-    async addAddress({ commit }, address) {
-      const data = await this.$api.addresses.post(address);
-
-      commit(
-        ADD_ENTITY,
-        {
-          module: "addresses",
-          entity: "addresses",
-          value: data,
-        },
-        { root: true }
-      );
+    async addAddress({ dispatch }, address) {
+      await this.$api.addresses.post(address);
+      dispatch('getAddresses');
     },
   },
 };
