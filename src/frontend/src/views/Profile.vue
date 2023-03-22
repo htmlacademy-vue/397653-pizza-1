@@ -35,6 +35,7 @@
             v-if="address.id === editableAddressId"
             :address="address"
             :user="user"
+            @closeNewAddressForm="closeNewAddressForm"
           />
 
           <div v-else class="sheet address-form">
@@ -59,7 +60,7 @@
         </div>
 
         <div v-if="newAddressForm">
-          <ProfileAddressForm :address="newAddressData" :user="user" />
+          <ProfileAddressForm :address="newAddressData" :user="user" @closeNewAddressForm="closeNewAddressForm"/>
         </div>
         <div class="layout__button">
           <button
@@ -131,6 +132,10 @@ export default {
       this.editableAddressId = null;
       this.newAddressForm = true;
     },
+    closeNewAddressForm() {
+      this.newAddressForm = false;
+      this.editableAddressId = null;
+    }
   },
 };
 </script>

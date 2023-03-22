@@ -15,9 +15,6 @@ export default {
 
   state: initialState(),
   getters: {
-    getPizza(state) {
-      return state.pizza;
-    },
     getTotalPrice(state) {
       return state.totalPrice;
     },
@@ -56,6 +53,10 @@ export default {
       state.pizza.forEach((el) => {
         if (item.label.label === el.label) {
           el.count = item.count;
+          if(item.count == 0) {
+            let index = state.pizza.indexOf(el)
+            state.pizza.splice(index, 1)
+          }
         }
       });
     },

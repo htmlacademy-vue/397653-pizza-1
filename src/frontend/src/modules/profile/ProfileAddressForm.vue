@@ -73,14 +73,14 @@
           v-if="isAddressEdited"
           type="button"
           class="button button--transparent"
-          @click="deleteAddress(address.id)"
+          @click.prevent="deleteAddress(address.id)"
         >
           Удалить
         </button>
         <button
           type="submit"
           class="button"
-          @click="saveAddress"
+          @click.prevent="saveAddress"
           >Сохранить</button>
       </div>
     </form>
@@ -152,6 +152,7 @@ export default {
       } else {
         this.addAddress(address);
       }
+      this.$emit("closeNewAddressForm");
     },
   },
 };

@@ -21,19 +21,7 @@
         <router-link
           v-if="user"
           to="/profile">
-          <picture>
-            <source
-              type="image/webp"
-              :srcset="getWebPSrc" />
-            <img
-              :src="user.avatar"
-              :srcset="getSrc"
-              :alt="user.name"
-              width="72"
-              height="72"
-            />
-          </picture>
-          <span>{{ user.name }}</span>
+          <UserIcon />
         </router-link>
 
         <a
@@ -61,23 +49,17 @@
 <script>
 import { mapState } from "vuex";
 import logout from "@/common/mixins/logout";
+import UserIcon from "@/common/components/UserIcon";
 
 export default {
   name: "AppLayoutHeader",
   mixins: [logout],
+  components: {
+    UserIcon,
+  },
   computed: {
     ...mapState("cart", ["totalPrice"]),
     ...mapState("auth", ["user"]),
-
-    getWebPSrc: function () {
-      return `${this.user.avatar.replace(
-        ".jpg",
-        "@2x.webp"
-      )} 1x, ${this.user.avatar.replace(".jpg", "@4x.webp")} 2x`;
-    },
-    getSrc: function () {
-      return `${this.user.avatar.replace(".jpg", "@4x")}.jpg`;
-    },
   },
 };
 </script>

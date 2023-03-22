@@ -6,7 +6,7 @@
         <div class="ingredients__sauce">
           <p>Основной соус:</p>
           <RadioButton
-            v-for="sauce in labeledlSauces"
+            v-for="sauce in labeledSauces"
             :key="sauce.name"
             :value="sauce.label"
             class="radio ingredients__input"
@@ -36,8 +36,7 @@
               <ItemCounter
                 @change="changeIngredient($event, ingredient)"
                 :count="ingredient.count"
-                :disabledMin="ingredient.count === min"
-                :disabledMax="ingredient.count === max"
+                :maxValue="max"
               />
             </li>
           </ul>
@@ -77,7 +76,7 @@ export default {
     },
   },
   computed: {
-    ...mapGetters("builder", ["labeledlSauces"]),
+    ...mapGetters("builder", ["labeledSauces"]),
     ...mapState("builder", ["currentSauce", "ingredientsItems"]),
     max() {
       return MAX_INGREDIENT_VALUE

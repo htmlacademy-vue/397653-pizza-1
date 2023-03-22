@@ -22,12 +22,12 @@ export default {
   },
   methods: {
     ...mapActions("cart", ["resetCartState"]),
-    closeModal() {
+    async closeModal() {
       this.resetCartState()
       if (this.user !== null) {
-        this.$router.push({ name: "Orders" });
+        await this.$router.push({ name: "Orders" });
       } else {
-        this.$router.push({ name: "IndexHome" });
+        await this.$router.push({ name: "IndexHome" });
       }
     },
   },

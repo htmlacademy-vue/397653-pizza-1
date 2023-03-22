@@ -4,7 +4,7 @@
       type="button"
       class="counter__button counter__button--minus"
       @click="$emit('change', count - 1)"
-      :disabled="disabledMin"
+      :disabled="count === minValue"
     >
       <span class="visually-hidden">Меньше</span>
     </button>
@@ -19,7 +19,7 @@
       type="button"
       class="counter__button counter__button--plus"
       @click="$emit('change', count + 1)"
-      :disabled="disabledMax"
+      :disabled="count === maxValue"
     >
       <span class="visually-hidden">Больше</span>
     </button>
@@ -27,6 +27,8 @@
 </template>
 
 <script>
+import { MIN_INGREDIENT_VALUE } from '@/common/constants'
+
 export default {
   name: 'ItemCounter',
   props: {
@@ -34,13 +36,15 @@ export default {
       type: Number,
       required: true
     },
-    disabledMin: {
-      type: Boolean,
-      required: false
+    minValue: {
+      type: Number,
+      required: false,
+      default: MIN_INGREDIENT_VALUE
     },
-    disabledMax: {
-      type: Boolean,
-      required: false
+    maxValue: {
+      type: Number,
+      required: false,
+      default: Infinity
     }
   },
 };

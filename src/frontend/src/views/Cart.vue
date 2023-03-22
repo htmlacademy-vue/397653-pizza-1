@@ -1,16 +1,16 @@
 ﻿<template>
   <div>
-    <form class="layout-form" @submit.prevent="saveOrder">
+    <form class="layout-form">
       <main class="content cart">
         <div class="container">
           <div class="cart__title">
             <h1 class="title title--big">Корзина</h1>
           </div>
 
-          <CartEmpty v-if="getPizza.length == 0" />
+          <CartEmpty v-if="pizza.length == 0" />
 
-          <ul v-if="getPizza.length > 0" class="cart-list sheet">
-            <li class="cart-list__item" v-for="item in getPizza" :key="item.id">
+          <ul v-if="pizza.length > 0" class="cart-list sheet">
+            <li class="cart-list__item" v-for="item in pizza" :key="item.id">
               <div class="product cart-list__product">
                 <img
                   src="@/assets/img/product.svg"
@@ -49,7 +49,7 @@
             </li>
           </ul>
 
-          <div v-if="getPizza.length > 0" class="cart__additional">
+          <div v-if="pizza.length > 0" class="cart__additional">
             <ul class="additional-list">
               <li
                 v-for="item in labeledMisc"
@@ -78,7 +78,7 @@
           </div>
 
           <CartForm
-            v-if="getPizza.length > 0"
+            v-if="pizza.length > 0"
             @setAddress="setAddress"
             :reorderAddressId="addressId"
           ></CartForm>
@@ -100,7 +100,7 @@
           <b>Итого: {{ resultPrice }} ₽</b>
         </div>
         <div class="footer__submit">
-          <button class="button" type="submit">Оформить заказ</button>
+          <button class="button" type="submit" @click.prevent="saveOrder">Оформить заказ</button>
         </div>
       </section>
     </form>
@@ -146,10 +146,10 @@ export default {
     await this.getMiscData()
   },
   computed: {
-    ...mapGetters("cart", ["labeledMisc", "getPizza", "getPriceMisc", "getPricePizzas"]),
+    ...mapGetters("cart", ["labeledMisc", "getPriceMisc", "getPricePizzas"]),
     ...mapState("auth", ["user"]),
     ...mapState("addresses", ["addresses"]),
-    ...mapState("cart", ["misc"]),
+    ...mapState("cart", ["misc", "pizza"]),
     resultPrice() {
       this.setTotalPrice(this.getPricePizzas + this.getPriceMisc);
       return this.getPricePizzas + this.getPriceMisc;
@@ -176,7 +176,7 @@ export default {
       this.address = address;
     },
     normalizePizzas() {
-      return this.getPizza.map((pizza) => {
+      return this.pizza.map((pizza) => {
         return {
           name: pizza.label,
           quantity: pizza.count,

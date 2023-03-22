@@ -9,11 +9,9 @@
         <span>Сумма заказа: {{ orderPrice }} ₽</span>
       </div>
 
-      <form @submit="deleteOrder(order.id)">
-        <div class="order__button">
-          <button type="button" class="button button--border">Удалить</button>
-        </div>
-      </form>
+      <div class="order__button">
+        <button type="button" @click="deleteOrder(order.id)" class="button button--border">Удалить</button>
+      </div>
 
       <div class="order__button">
         <button type="button" @click="repeatOrder()" class="button">Повторить</button>
@@ -111,9 +109,13 @@ export default {
       this.pizzas.forEach((pizza) => {
         let pizzaState = this.$store.state.builder;
         var currentPizzaIngredientsNames = [];
-        var currentPizzaIngredients = [];
+        var currentPizzaIngredients = pizza.ingredients.map((item) => {
+          return {
+            ...getItemById(pizzaState.ingredientsItems, item.ingredientId),
+            count: item.quantity,
+          };
+        });
         for (let i = 0; i < pizza.ingredients.length; i++) {
-          currentPizzaIngredients.push(pizza.ingredients[i]);
           currentPizzaIngredientsNames.push(
             " " + getItemById(pizzaState.ingredientsItems, pizza.ingredients[i].ingredientId).name.toLowerCase()
           );

@@ -119,10 +119,10 @@ export default {
   },
   watch: {
     street() {
-      this.$clearValidationError();
+      this.$clearValidationError("street");
     },
     building() {
-      this.$clearValidationError();
+      this.$clearValidationError("building");
     },
   },
   computed: {

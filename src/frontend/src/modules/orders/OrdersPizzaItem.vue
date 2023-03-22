@@ -46,7 +46,7 @@ export default {
       const names = this.pizza.ingredients.map((el) => {
         return getItemById(this.ingredientsItems, el.ingredientId).name.toLowerCase();
       });
-      return names.join()
+      return names.join(', ')
     },
   },
 };

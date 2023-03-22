@@ -46,7 +46,7 @@ export default {
       state.dough.map((item) => { item.label = item.name == "Толстое" ? "big" : "small" });
       return state.dough;
     },
-    labeledlSauces(state) {
+    labeledSauces(state) {
       state.sauces.map((item) => { item.label = item.name == "Томатный" ? "tomato" : "creamy" });
       return state.sauces;
     },
