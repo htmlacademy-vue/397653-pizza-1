@@ -21,8 +21,7 @@ export default {
     ...mapState("auth", ["user"]),
   },
   methods: {
-    ...mapActions("cart", ["resetCartState"]),
-    ...mapActions("cart", ["getMiscData"]),
+    ...mapActions("cart", ["resetCartState", "getMiscData"]),
     async closeModal() {
       this.resetCartState()
       await this.getMiscData()
