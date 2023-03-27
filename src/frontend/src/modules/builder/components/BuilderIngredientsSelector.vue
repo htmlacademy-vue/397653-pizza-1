@@ -26,7 +26,7 @@
               :key="ingredient.id"
             >
               <AppDrag
-                :transfer-data="ingredient"
+                :transferData="ingredient"
                 :draggable="ingredient.count !== max"
               >
                 <span :class="['filling', getIngredientClass(ingredient.name)]">
@@ -49,7 +49,7 @@
 <script>
 import { mapIngredientName } from '@/common/enums/pizzaIngredientName'
 import { mapSauceName } from '@/common/enums/pizzaSauceName'
-import { MIN_INGREDIENT_VALUE, MAX_INGREDIENT_VALUE } from '@/common/constants'
+import {  MAX_INGREDIENT_VALUE } from '@/common/constants'
 import AppDrag from '@/common/components/AppDrag';
 import RadioButton from '@/common/components/RadioButton'
 import ItemCounter from '@/common/components/ItemCounter'
@@ -81,9 +81,6 @@ export default {
     max() {
       return MAX_INGREDIENT_VALUE
     },
-    min() {
-      return MIN_INGREDIENT_VALUE
-    }
   }
 };
 </script>

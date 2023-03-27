@@ -36,17 +36,16 @@ export default {
       type: Number,
       required: true
     },
-    minValue: {
-      type: Number,
-      required: false,
-      default: MIN_INGREDIENT_VALUE
-    },
     maxValue: {
       type: Number,
-      required: false,
       default: Infinity
     }
   },
+  computed: {
+    minValue() {
+      return MIN_INGREDIENT_VALUE
+    }
+  }
 };
 </script>
 

@@ -26,7 +26,7 @@ export default {
   state: initialState(),
   getters: {
     getPrice(state) {
-      var sumPrice = 0;
+      let sumPrice = 0;
       for (let i = 0; i < state.ingredientsItems.length; i++) {
         sumPrice = sumPrice + state.ingredientsItems[i].count * state.ingredientsItems[i].price;
       }

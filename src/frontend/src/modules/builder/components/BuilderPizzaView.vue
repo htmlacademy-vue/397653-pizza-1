@@ -103,8 +103,8 @@ export default {
       this.setTotalPrice(totalPrice)
 
       let pizzaState = this.$store.state.builder;
-      var currentPizzaIngredientsNames = [];
-      var currentPizzaIngredients = [];
+      let currentPizzaIngredientsNames = [];
+      let currentPizzaIngredients = [];
       for (let i = 0; i < pizzaState.ingredientsItems.length; i++) {
         if (pizzaState.ingredientsItems[i].count > 0) {
           currentPizzaIngredients.push(pizzaState.ingredientsItems[i]);

@@ -8,7 +8,7 @@
     </div>
     <p>Мы начали готовить Ваш заказ, скоро привезём его вам ;)</p>
     <div class="popup__button">
-      <a href="#" class="button" @click="closeModal()"> Отлично, я жду! </a>
+      <a href="#" class="button" @click.prevent="closeModal()"> Отлично, я жду! </a>
     </div>
   </div>
 </template>
@@ -22,8 +22,10 @@ export default {
   },
   methods: {
     ...mapActions("cart", ["resetCartState"]),
+    ...mapActions("cart", ["getMiscData"]),
     async closeModal() {
       this.resetCartState()
+      await this.getMiscData()
       if (this.user !== null) {
         await this.$router.push({ name: "Orders" });
       } else {

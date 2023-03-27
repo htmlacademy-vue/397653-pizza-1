@@ -19,13 +19,14 @@ export default {
       return state.totalPrice;
     },
     labeledMisc(state) {
-      state.misc.map((el) => {
+      let labeledMisc = state.misc
+      labeledMisc.map((el) => {
         el.label = el.image.replace(".svg", "").replace("/public/img/", "");
       });
-      return state.misc;
+      return labeledMisc;
     },
     getPricePizzas(state) {
-      var sumPricePizzas = 0;
+      let sumPricePizzas = 0;
       if(state.pizza.length > 0) {
         for (let i = 0; i < state.pizza.length; i++) {
           sumPricePizzas = sumPricePizzas + state.pizza[i].count * state.pizza[i].price;
@@ -34,7 +35,7 @@ export default {
       return sumPricePizzas;
     },
     getPriceMisc(state) {
-      var sumPriceMisc = 0;
+      let sumPriceMisc = 0;
       for (let i = 0; i < state.misc.length; i++) {
         sumPriceMisc = sumPriceMisc + state.misc[i].count * state.misc[i].price;
       }

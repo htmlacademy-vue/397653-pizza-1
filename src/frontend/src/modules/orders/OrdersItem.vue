@@ -108,8 +108,8 @@ export default {
     async repeatOrder() {
       this.pizzas.forEach((pizza) => {
         let pizzaState = this.$store.state.builder;
-        var currentPizzaIngredientsNames = [];
-        var currentPizzaIngredients = pizza.ingredients.map((item) => {
+        let currentPizzaIngredientsNames = [];
+        let currentPizzaIngredients = pizza.ingredients.map((item) => {
           return {
             ...getItemById(pizzaState.ingredientsItems, item.ingredientId),
             count: item.quantity,
