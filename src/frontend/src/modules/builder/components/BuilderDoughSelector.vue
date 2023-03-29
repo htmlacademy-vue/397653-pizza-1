@@ -4,13 +4,13 @@
       <h2 class="title title--small sheet__title">Выберите тесто</h2>
       <div class="sheet__content dough">
         <RadioButton
-          v-for="dough in dough"
+          v-for="dough in labeledDough"
           :key="dough.name"
           :value="getDoughValue(dough.name)"
           :class="['dough__input', getDoughClass(dough.name)]"
           :name="'dough'"
-          :isChecked="dough.id === 1"
-          @changePizza="$emit('changePizza', getDoughValue(dough.name))"
+          :isChecked="dough.id === currentDough.id"
+          @changePizza="changeDough(dough)"
         >
           <b>{{ dough.name }}</b>
           <span>{{ dough.description }}</span>
@@ -21,26 +21,29 @@
 </template>
 
 <script>
-import { mapDough } from '@/common/helpers';
+import { mapDough } from '@/common/enums/pizzaDough'
 import RadioButton from '@/common/components/RadioButton'
+import { mapState, mapGetters, mapMutations } from "vuex";
 
 export default {
   name: 'BuilderDoughSelector',
   components: {
     RadioButton
   },
-  props: {
-    dough: {
-      type: Array,
-      required: true
-    }
+  computed: {
+    ...mapGetters("builder", ["labeledDough"]),
+    ...mapState("builder", ["currentDough"]),
   },
   methods: {
+    ...mapMutations("builder", ["setCurrentDough"]),
     getDoughClass(name) {
       return 'dough__input--' + mapDough[name]
     },
     getDoughValue(name) {
       return mapDough[name]
+    },
+    changeDough(dough) {
+      this.setCurrentDough(dough);
     },
   }
 };

@@ -2,11 +2,11 @@
   <label>
     <input
       type="radio"
-      class="visually-hidden" 
+      class="visually-hidden"
       :name="name"
       :value="value"
       :checked="isChecked"
-      @change="$emit('changePizza', $event.target.value)"
+      @change="$emit('changePizza', $event.target)"
     />
     <slot />
   </label>
@@ -25,7 +25,7 @@ export default {
       type: String,
       required: true
     },
-    
+
     isChecked: {
       type: Boolean,
       required: true

@@ -27,7 +27,7 @@
 </template>
 
 <script>
-import { MIN_INGREDIENT_VALUE, MAX_INGREDIENT_VALUE } from '@/common/constants'
+import { MIN_INGREDIENT_VALUE } from '@/common/constants'
 
 export default {
   name: 'ItemCounter',
@@ -35,14 +35,15 @@ export default {
     count: {
       type: Number,
       required: true
+    },
+    maxValue: {
+      type: Number,
+      default: Infinity
     }
   },
   computed: {
     minValue() {
       return MIN_INGREDIENT_VALUE
-    },
-    maxValue() {
-      return MAX_INGREDIENT_VALUE
     }
   }
 };
