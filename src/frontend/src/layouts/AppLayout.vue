@@ -1,7 +1,9 @@
 ﻿<template>
-  <component :is="layout">
-    <slot />
-  </component>
+  <transition name="slide" mode="out-in">
+    <component :is="layout">
+      <slot />
+    </component>
+  </transition>
 </template>
 
 <script>
@@ -20,5 +22,16 @@ export default {
 </script>
 
 <style>
-
+.slide-enter-active {
+  transition: all 0.4s
+}
+.slide-enter {
+  opacity: 0;
+  margin-left: 90px;
+}
+.slide-leave-active {
+  transition: all 0.4s;
+  opacity: 0;
+  margin-left: -100px;
+}
 </style>
