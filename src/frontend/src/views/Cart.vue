@@ -85,7 +85,9 @@
         </div>
       </main>
 
-      <CartModal @close="closeModal" v-if="isModal" />
+      <transition name="replace">
+        <CartModal @close="closeModal" v-if="isModal" />
+      </transition>
 
       <section class="footer">
         <div class="footer__more">
@@ -242,5 +244,15 @@ export default {
   .ingredients__counter {
     margin-top: 0;
     margin-left: 0;
+  }
+
+  .replace-enter-active,
+  .replace-leave-active {
+    transition: opacity .5s;
+  }
+
+  .replace-enter,
+  .replace-leave-to {
+    opacity: 0;
   }
 </style>

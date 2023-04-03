@@ -8,7 +8,7 @@
         placeholder="Введите название пиццы"
         :value="namePizza"
         required
-        @input='setPizzaName($event.target.value)'
+        @input='setCurrentPizzaName($event.target.value)'
       />
     </label>
     <div class="content__constructor">
@@ -20,15 +20,17 @@
           ]"
         >
           <div class="pizza__wrapper">
-            <template v-for="ingredient in ingredientsItems">
-              <div
-                v-for="count in ingredient.count"
-                :key="`${ingredient.name}-${count}`"
-                :class="`pizza__filling pizza__filling--${
-                  ingredient.label
-                } ${getIngredientClasses(count)}`"
-              ></div>
-            </template>
+            <transition-group name="ingredients">
+              <template v-for="ingredient in ingredientsItems">
+                <div
+                  v-for="count in ingredient.count"
+                  :key="`${ingredient.name}-${count}`"
+                  :class="`pizza__filling pizza__filling--${
+                    ingredient.label
+                  } ${getIngredientClasses(count)}`"
+                ></div>
+              </template>
+            </transition-group>
           </div>
         </div>
       </AppDrop>
@@ -95,9 +97,6 @@ export default {
       }
       return className;
     },
-    setPizzaName(val) {
-      this.setCurrentPizzaName(val);
-    },
     addPizza() {
       let totalPrice = this.getPrice()
       this.setTotalPrice(totalPrice)
@@ -144,4 +143,14 @@ export default {
 </script>
 
 <style>
+.ingredients-enter-active,
+.ingredients-leave-active {
+  transition: all .5s ease;
+}
+
+.ingredients-enter,
+.ingredients-leave-to {
+  transform: scale(1.1);
+  opacity: 0;
+}
 </style>
