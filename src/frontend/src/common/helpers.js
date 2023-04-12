@@ -5,10 +5,6 @@ import {
   ReadOnlyApiService,
   BuilderApiService,
 } from "@/services/api.service";
-import { DOUGH, INGREDIENTS, SAUCE, SIZE } from "./constants";
-import colaImage from "@/assets/img/cola.svg";
-import sauceImage from "@/assets/img/sauce.svg";
-import potatoImage from "@/assets/img/potato.svg";
 
 export const createResources = (notifier) => {
   return {
@@ -36,35 +32,6 @@ export const isEmpty = (obj) => {
   return true;
 };
 
-export const normalizeDough = (dough) => {
-  return {
-    ...dough,
-    ...DOUGH.find(({ name }) => dough.name === name),
-  };
-};
-
-export const normalizeIngredients = (ingredient) => {
-  return {
-    ...ingredient,
-    ...INGREDIENTS.find(({ name }) => ingredient.name === name),
-    count: 0,
-  };
-};
-
-export const normalizeSauce = (souce) => {
-  return {
-    ...souce,
-    ...SAUCE.find(({ name }) => souce.name === name),
-  };
-};
-
-export const normalizeSize = (size) => {
-  return {
-    ...size,
-    ...SIZE.find(({ name }) => size.name === name),
-  };
-};
-
 export const normalizeAdditionalItems = (item) => {
   return {
     ...item,
@@ -85,16 +52,4 @@ export const normalizeItems = (item) => {
     ...item,
     label: "",
   };
-};
-
-let additionalImages = [colaImage, sauceImage, potatoImage];
-
-export const normilizeAdditional = (additionals) => {
-  return additionals.map((item, index) => {
-    return {
-      ...item,
-      image: additionalImages[index],
-      count: 0,
-    };
-  });
 };
