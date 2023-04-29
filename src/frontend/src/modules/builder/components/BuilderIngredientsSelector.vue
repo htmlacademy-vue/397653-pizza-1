@@ -14,7 +14,7 @@
             :isChecked="currentSauce.id === sauce.id"
             @changePizza="setCurrentSauce(sauce)"
           >
-            <span>{{ sauce.name }}</span>
+            <span data-test="sauce">{{ sauce.name }}</span>
           </RadioButton>
         </div>
         <div class="ingredients__filling">
@@ -24,6 +24,7 @@
               class="ingredients__item"
               v-for="ingredient in ingredientsItems"
               :key="ingredient.id"
+              data-test="ingredients-item"
             >
               <AppDrag
                 :transferData="ingredient"
@@ -37,6 +38,7 @@
                 @change="changeIngredient($event, ingredient)"
                 :count="ingredient.count"
                 :maxValue="max"
+                data-test="ingredients-counter"
               />
             </li>
           </ul>

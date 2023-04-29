@@ -74,6 +74,7 @@
           type="button"
           class="button button--transparent"
           @click.prevent="deleteAddress(address.id)"
+          data-test="delete-button"
         >
           Удалить
         </button>
@@ -81,6 +82,7 @@
           type="submit"
           class="button"
           @click.prevent="saveAddress"
+          data-test="save-button"
           >Сохранить</button>
       </div>
     </form>

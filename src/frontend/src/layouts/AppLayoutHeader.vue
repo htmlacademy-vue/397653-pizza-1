@@ -15,12 +15,13 @@
       </div>
 
       <div class="header__cart">
-        <router-link to="/cart">{{ totalPrice }} ₽</router-link>
+        <router-link to="/cart" data-test="cart-link">{{ totalPrice }} ₽</router-link>
       </div>
       <div class="header__user" style="display: flex">
         <router-link
           v-if="user"
-          to="/profile">
+          to="/profile"
+        >
           <UserIcon />
         </router-link>
 
@@ -37,7 +38,8 @@
         <router-link
           v-else
           to="/login"
-          class="header__login">
+          class="header__login"
+          data-test="login-link">
           <span>Войти</span></router-link
         >
       </div>

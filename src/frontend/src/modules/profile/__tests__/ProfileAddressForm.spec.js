@@ -1,10 +1,12 @@
 ﻿import { createLocalVue, mount } from "@vue/test-utils";
 import ProfileAddressForm from "@/modules/profile/ProfileAddressForm";
-import { generateMockStore } from "@/store/mock";
+import AppInput from '@/common/components/AppInput';
+import { generateMockStore } from "@/store/mocks";
 import Vuex from "vuex";
 
 const localVue = createLocalVue();
 localVue.use(Vuex);
+localVue.component('AppInput', AppInput);
 
 const newAddress = {
   id: null,
@@ -55,7 +57,7 @@ describe("ProfileAddressForm", () => {
   });
 
   afterEach(() => {
-    wrapper.destroy();
+    wrapper?.destroy();
   });
 
   it("is rendered", () => {
@@ -164,7 +166,7 @@ describe("ProfileAddressForm", () => {
     await streetInput.trigger("input");
     buildingInput.element.value = "5";
     await buildingInput.trigger("input");
-    await wrapper.find("form").trigger("submit");
+    await wrapper.find("[data-test='save-button']").trigger("click");
 
     expect(actions.addresses.addAddress).toHaveBeenCalledWith(
       expect.any(Object),
@@ -184,7 +186,7 @@ describe("ProfileAddressForm", () => {
       propsData: { address: existedAddress, user: user },
     });
 
-    await wrapper.find("form").trigger("submit.prevent");
+    await wrapper.find("[data-test='save-button']").trigger("click.prevent");
     expect(actions.addresses.editAddress).toHaveBeenCalledWith(
       expect.any(Object),
       existedAddress

@@ -3,9 +3,7 @@ import ItemCounter from "@/common/components/ItemCounter";
 
 describe("ItemCounter", () => {
   const defaultPropsData = {
-    item: {
-      count: 0,
-    },
+    count: 0,
   };
 
   const getPropsData = (params) => {
@@ -23,7 +21,7 @@ describe("ItemCounter", () => {
   };
 
   afterEach(() => {
-    wrapper.destroy();
+    wrapper?.destroy();
   });
 
   it("sets the initial value", () => {
@@ -35,24 +33,24 @@ describe("ItemCounter", () => {
     createComponent(getPropsData());
     const plusBtn = wrapper.find(".counter__button--plus");
     await plusBtn.trigger("click");
-    expect(wrapper.emitted("itemCount")[0][1]).toBe(1);
+    expect(wrapper.emitted("change")[0][0]).toBe(1);
   });
 
   it("emits decremented input value when minus button clicked", async () => {
-    createComponent(getPropsData({ item: { count: 2 } }));
+    createComponent(getPropsData({ count: 2 }));
     const minusBtn = wrapper.find(".counter__button--minus");
     await minusBtn.trigger("click");
-    expect(wrapper.emitted("itemCount")[0][1]).toBe(1);
+    expect(wrapper.emitted("change")[0][0]).toBe(1);
   });
 
   it("plus button is disabled when value is equal to max value", () => {
-    createComponent(getPropsData({ item: { count: 3 } }));
+    createComponent(getPropsData({ count: 3, maxValue: 3 }));
     const plusBtn = wrapper.find(".counter__button--plus");
     expect(plusBtn.attributes("disabled")).toBe("disabled");
   });
 
   it("minus button is disabled when value is equal to min value", () => {
-    createComponent(getPropsData({ item: { count: 0 } }));
+    createComponent(getPropsData({ count: 0 }));
     const minusBtn = wrapper.find(".counter__button--minus");
     expect(minusBtn.attributes("disabled")).toBe("disabled");
   });

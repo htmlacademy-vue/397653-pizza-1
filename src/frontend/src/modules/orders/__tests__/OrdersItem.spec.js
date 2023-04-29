@@ -7,7 +7,7 @@ import {
   setSizes,
   setIngredients,
   setAdditionalItems,
-} from "@/store/mock";
+} from "@/store/mocks";
 import Vuex from "vuex";
 
 const localVue = createLocalVue();
@@ -83,7 +83,7 @@ describe("OrdersItem", () => {
   });
 
   afterEach(() => {
-    wrapper.destroy();
+    wrapper?.destroy();
   });
 
   it("is rendered", () => {
@@ -94,7 +94,7 @@ describe("OrdersItem", () => {
   it("deletes order on delete button click", async () => {
     createComponent({ localVue, store, mocks, propsData });
     const deleteBtn = wrapper.find('[data-test="delete-btn"]');
-    await deleteBtn.trigger("submit");
+    await deleteBtn.trigger("click");
     expect(actions.orders.deleteOrder).toHaveBeenCalledWith(
       expect.any(Object), // The Vuex context
       propsData.order.id

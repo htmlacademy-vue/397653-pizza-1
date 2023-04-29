@@ -1,6 +1,6 @@
 ﻿import { mount, createLocalVue } from "@vue/test-utils";
 import Vuex from "vuex";
-import { generateMockStore, setSizes } from "@/store/mock";
+import { generateMockStore, setSizes } from "@/store/mocks";
 import BuilderSizeSelector from "@/modules/builder/components/BuilderSizeSelector";
 
 const localVue = createLocalVue();
@@ -19,7 +19,7 @@ describe("BuilderSizeSelector", () => {
   });
 
   afterEach(() => {
-    wrapper.destroy();
+    wrapper?.destroy();
   });
 
   it("renders size name for size item", async () => {
@@ -31,7 +31,7 @@ describe("BuilderSizeSelector", () => {
     createComponent({ localVue, store });
     const spyOnMutation = jest.spyOn(wrapper.vm, "setCurrentSize");
     const selector = wrapper.find('input[name="diameter"]');
-    await selector.trigger("click");
+    await selector.trigger("change");
     expect(spyOnMutation).toHaveBeenCalledWith({
       id: 1,
       image: "/public/img/diameter.svg",

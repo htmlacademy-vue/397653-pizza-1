@@ -1,5 +1,5 @@
 ﻿import { mount, createLocalVue } from "@vue/test-utils";
-import { generateMockStore, setIngredients } from "@/store/mock";
+import { generateMockStore, setIngredients } from "@/store/mocks";
 import Index from "@/views/Index";
 import Vuex from "vuex";
 
@@ -30,7 +30,7 @@ describe("Index", () => {
   });
 
   afterEach(() => {
-    wrapper.destroy();
+    wrapper?.destroy();
   });
 
   it("is rendered", () => {
@@ -39,13 +39,22 @@ describe("Index", () => {
 
   it("when dropped, it increases the amount of the ingredient on the pizza", async () => {
     createComponent({ localVue, store });
-    const testLabel = "salmon";
-    const spyOnAction = jest.spyOn(wrapper.vm, "dropIngredients");
-    wrapper.vm.dropIngredients(testLabel);
+    const testLabel = {
+      ingredient: {
+        count: 0,
+        id: 4,
+        image: "/public/img/filling/ham.svg",
+        label: "ham",
+        name: "Ветчина",
+        price: 42,
+      }
+    };
+    const spyOnAction = jest.spyOn(wrapper.vm, "changeIngredient");
+    wrapper.vm.changeIngredient(testLabel);
     expect(spyOnAction).toHaveBeenCalledWith(testLabel);
     expect(
       store.state.builder.ingredientsItems.find(
-        (item) => item.label === testLabel
+        (item) => item.label === testLabel.ingredient.label
       ).count == 1
     );
   });

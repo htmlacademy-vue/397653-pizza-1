@@ -5,7 +5,7 @@ import {
   setSizes,
   setSauces,
   setIngredients,
-} from "@/store/mock";
+} from "@/store/mocks";
 import Vuex from "vuex";
 import OrdersPizzaItem from "@/modules/orders/OrdersPizzaItem";
 
@@ -42,7 +42,7 @@ describe("OrdersPizzaItem", () => {
   });
 
   afterEach(() => {
-    wrapper.destroy();
+    wrapper?.destroy();
   });
 
   it("renders out pizza name", () => {

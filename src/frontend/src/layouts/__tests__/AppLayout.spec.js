@@ -16,7 +16,7 @@ describe("AppLayout", () => {
   };
 
   afterEach(() => {
-    wrapper.destroy();
+    wrapper?.destroy();
   });
 
   it("is rendered", () => {

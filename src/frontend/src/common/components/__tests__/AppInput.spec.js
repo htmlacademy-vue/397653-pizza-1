@@ -19,7 +19,7 @@ describe('AppInput', () => {
   };
 
   afterEach(() => {
-    wrapper.destroy();
+    wrapper?.destroy();
   });
 
   it('It sets the initial model value', () => {

@@ -1,12 +1,12 @@
 ﻿import { mount, createLocalVue } from "@vue/test-utils";
 import Vuex from "vuex";
-import { generateMockStore, setAddresses, setUser } from "@/store/mock";
-import CartOrderForm from "@/modules/cart/CartOrderForm";
+import { generateMockStore, setAddresses, setUser } from "@/store/mocks";
+import CartForm from "@/modules/cart/components/CartForm";
 
 const localVue = createLocalVue();
 localVue.use(Vuex);
 
-describe("CartOrderForm", () => {
+describe("CartForm", () => {
   const propsData = {
     reorderAddressId: null,
     validations: {
@@ -25,7 +25,7 @@ describe("CartOrderForm", () => {
   let store;
   let wrapper;
   const createComponent = (options) => {
-    wrapper = mount(CartOrderForm, options);
+    wrapper = mount(CartForm, options);
   };
 
   beforeEach(() => {
@@ -40,7 +40,7 @@ describe("CartOrderForm", () => {
   });
 
   afterEach(() => {
-    wrapper.destroy();
+    wrapper?.destroy();
   });
 
   it("fetch addresses if user is authenticated", async () => {
@@ -87,7 +87,7 @@ describe("CartOrderForm", () => {
 
   it("form inputs change emits setAddress event with the current address value", async () => {
     createComponent({ localVue, store, propsData });
-    const phoneInput = wrapper.find('input[name="phone"]');
+    const phoneInput = wrapper.find('input[name="tel"]');
     await phoneInput.trigger("change");
     expect(wrapper.emitted("setAddress")[0][0]).toEqual({
       phone: "",

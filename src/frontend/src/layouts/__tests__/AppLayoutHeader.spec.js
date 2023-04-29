@@ -33,7 +33,7 @@ describe("AppLayoutHeader", () => {
   });
 
   afterEach(() => {
-    wrapper.destroy();
+    wrapper?.destroy();
   });
 
   it("renders Cart page link that displays total price", async () => {
@@ -41,7 +41,7 @@ describe("AppLayoutHeader", () => {
     const cartLink = wrapper.find('[data-test="cart-link"]');
     expect(cartLink.exists()).toBeTruthy();
     expect(cartLink.html()).toContain(
-      `${store.getters["cart/totalPrice"]} ₽`
+      `${store.getters["cart/getTotalPrice"]} ₽`
     );
   });
 
@@ -54,7 +54,7 @@ describe("AppLayoutHeader", () => {
   it("renders logout link if user is authenticated", async () => {
     setUser(store);
     createComponent({ localVue, store, mocks, stubs });
-    const logoutLink = wrapper.find('[data-test="logout-link"]');
+    const logoutLink = wrapper.find('.header__logout');
     expect(logoutLink.exists()).toBeTruthy();
   });
 });

@@ -1,10 +1,12 @@
 ﻿import { mount, createLocalVue } from "@vue/test-utils";
-import { generateMockStore } from "@/store/mock";
+import { generateMockStore } from "@/store/mocks";
+import AppInput from '@/common/components/AppInput';
 import Vuex from "vuex";
 import Login from "@/views/Login";
 
 const localVue = createLocalVue();
 localVue.use(Vuex);
+localVue.component('AppInput', AppInput);
 
 describe("Login", () => {
   const mocks = {
@@ -33,7 +35,7 @@ describe("Login", () => {
   });
 
   afterEach(() => {
-    wrapper.destroy();
+    wrapper?.destroy();
   });
 
   it("redirects to index page on close button click", async () => {

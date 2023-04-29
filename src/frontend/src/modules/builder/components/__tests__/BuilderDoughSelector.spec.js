@@ -1,6 +1,6 @@
 ﻿import { mount, createLocalVue } from "@vue/test-utils";
 import Vuex from "vuex";
-import { generateMockStore, setDough } from "@/store/mock";
+import { generateMockStore, setDough } from "@/store/mocks";
 import BuilderDoughSelector from "@/modules/builder/components/BuilderDoughSelector";
 
 const localVue = createLocalVue();
@@ -19,7 +19,7 @@ describe("BuilderSizeSelector", () => {
   });
 
   afterEach(() => {
-    wrapper.destroy();
+    wrapper?.destroy();
   });
 
   it("renders dough name and description for dough item", () => {
@@ -32,7 +32,7 @@ describe("BuilderSizeSelector", () => {
     createComponent({ localVue, store });
     const spyOnAction = jest.spyOn(wrapper.vm, "setCurrentDough");
     const selector = wrapper.find('input[name="dough"]');
-    await selector.trigger("click");
+    await selector.trigger("change");
     expect(spyOnAction).toHaveBeenCalledWith({
       description: "Из твердых сортов пшеницы",
       id: 1,

@@ -41,6 +41,7 @@
         type="button"
         class="button"
         :disabled="isDisabled"
+        data-test="add-to-cart-btn"
         @click="addPizza()"
       >Готовьте!</button>
     </div>

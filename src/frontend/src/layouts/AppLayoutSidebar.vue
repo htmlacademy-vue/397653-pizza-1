@@ -12,10 +12,10 @@
               height="40"
             />
           </router-link>
-          <router-link to="/orders" class="layout__link"
+          <router-link to="/orders" class="orders-link layout__link"
             >История заказов</router-link
           >
-          <router-link to="/profile" class="layout__link"
+          <router-link to="/profile" class="profile-link layout__link"
             >Мои данные</router-link
           >
         </div>

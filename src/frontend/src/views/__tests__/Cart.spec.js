@@ -1,7 +1,7 @@
 ﻿import { shallowMount, createLocalVue } from "@vue/test-utils";
-import { generateMockStore, setPizzaItems } from "@/store/mock";
+import { generateMockStore, setPizzaItems } from "@/store/mocks";
 import Vuex from "vuex";
-import Cart from "@/modules/cart/Cart";
+import Cart from "@/views/Cart";
 
 const localVue = createLocalVue();
 localVue.use(Vuex);
@@ -45,7 +45,7 @@ describe("Cart", () => {
   });
 
   afterEach(() => {
-    wrapper.destroy();
+    wrapper?.destroy();
   });
 
   it("displays component for empty if cart is empty", () => {
@@ -71,7 +71,7 @@ describe("Cart", () => {
     const addressForm = wrapper.find('[data-test="address-form"]');
     addressForm.vm.$emit("setAddress", { phone: "", address: testAddress });
     await wrapper.vm.$nextTick();
-    await wrapper.find('[data-test="order-form"]').trigger("submit");
+    await wrapper.find('[data-test="order-form"]').trigger("click");
     expect(actions.orders.createOrder).toHaveBeenCalled();
     await wrapper.vm.$nextTick();
 
@@ -84,7 +84,7 @@ describe("Cart", () => {
     const addressForm = wrapper.find('[data-test="address-form"]');
     addressForm.vm.$emit("setAddress", { phone: "", address: testAddress });
     await wrapper.vm.$nextTick();
-    await wrapper.find('[data-test="order-form"]').trigger("submit");
+    await wrapper.find('[data-test="order-form"]').trigger("click");
     await wrapper.vm.$nextTick();
     const successPopup = wrapper.find('[data-test="success-popup"]');
     successPopup.vm.$emit("close");

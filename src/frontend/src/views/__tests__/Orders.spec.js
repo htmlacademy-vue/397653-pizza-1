@@ -1,5 +1,5 @@
 ﻿import { shallowMount, createLocalVue } from "@vue/test-utils";
-import { generateMockStore } from "@/store/mock";
+import { generateMockStore } from "@/store/mocks";
 import Vuex from "vuex";
 import Orders from "@/views/Orders";
 
@@ -34,7 +34,7 @@ describe("Orders", () => {
   });
 
   afterEach(() => {
-    wrapper.destroy();
+    wrapper?.destroy();
   });
 
   it("calls vuex actions to fetch orders and additional items when mounted", async () => {

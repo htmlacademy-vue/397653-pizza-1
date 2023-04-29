@@ -15,6 +15,7 @@
             v-for="address in addresses"
             :key="address.id"
             :value="address.id"
+            data-test="user-address"
           >
             {{ address.name }}
           </option>

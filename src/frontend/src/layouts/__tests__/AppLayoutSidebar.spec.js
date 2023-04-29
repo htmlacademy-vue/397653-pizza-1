@@ -10,7 +10,7 @@ describe("AppLayoutSidebar", () => {
   const stubs = ["router-link"];
 
   afterEach(() => {
-    wrapper.destroy();
+    wrapper?.destroy();
   });
 
   it("is rendered", () => {
@@ -20,11 +20,11 @@ describe("AppLayoutSidebar", () => {
 
   it("renders Orders page link", async () => {
     createComponent({ stubs });
-    expect(wrapper.find('[data-test="orders-link"]')).toBeTruthy();
+    expect(wrapper.find('.orders-link').exists()).toBe(true);
   });
 
   it("renders Profile page link", async () => {
     createComponent({ stubs });
-    expect(wrapper.find('[data-test="profile-link"]')).toBeTruthy();
+    expect(wrapper.find('.profile-link').exists()).toBe(true);
   });
 });

@@ -1,6 +1,6 @@
 ﻿import { mount, createLocalVue } from "@vue/test-utils";
 import Vuex from "vuex";
-import { generateMockStore, setSauces, setIngredients } from "@/store/mock";
+import { generateMockStore, setSauces, setIngredients } from "@/store/mocks";
 import BuilderIngredientsSelector from "@/modules/builder/components/BuilderIngredientsSelector";
 
 const localVue = createLocalVue();
@@ -20,7 +20,7 @@ describe("BuilderIngredientsSelector", () => {
   });
 
   afterEach(() => {
-    wrapper.destroy();
+    wrapper?.destroy();
   });
 
   it("renders sauce name for sauce selector", () => {
@@ -40,7 +40,7 @@ describe("BuilderIngredientsSelector", () => {
     const spyOnAction = jest.spyOn(wrapper.vm, "setCountIngredients");
     const counter = wrapper.find('[data-test="ingredients-counter"]');
     const inputValue = parseInt(counter.find("input").element.value);
-    await counter.vm.$emit("itemCount", inputValue + 1);
+    await counter.vm.$emit("change", inputValue + 1);
     expect(spyOnAction).toHaveBeenCalled();
   });
 

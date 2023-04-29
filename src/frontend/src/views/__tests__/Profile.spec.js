@@ -1,5 +1,5 @@
 ﻿import { shallowMount, createLocalVue } from "@vue/test-utils";
-import { generateMockStore, setAddresses, setUser } from "@/store/mock";
+import { generateMockStore, setAddresses, setUser } from "@/store/mocks";
 import Vuex from "vuex";
 import Profile from "@/views/Profile";
 
@@ -27,7 +27,7 @@ describe("Profile", () => {
   });
 
   afterEach(() => {
-    wrapper.destroy();
+    wrapper?.destroy();
   });
 
   it("calls vuex action to get addresses when mounted", async () => {
