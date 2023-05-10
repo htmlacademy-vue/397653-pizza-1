@@ -2,10 +2,11 @@
 import AppLayout from "@/layouts/AppLayout";
 
 describe("AppLayout", () => {
+  const stubs = ["AppNotifications"];
   const mocks = {
     $route: {
       meta: {
-        layout: null,
+        layout: '',
       },
     },
   };
@@ -15,12 +16,8 @@ describe("AppLayout", () => {
     wrapper = shallowMount(AppLayout, options);
   };
 
-  afterEach(() => {
-    wrapper?.destroy();
-  });
-
   it("is rendered", () => {
-    createComponent({ mocks });
+    createComponent({ mocks, stubs });
     expect(wrapper.exists()).toBeTruthy();
   });
 });
