@@ -10,11 +10,11 @@
       </div>
 
       <div class="order__button">
-        <button type="button" @click="deleteOrder(order.id)" class="button button--border">Удалить</button>
+        <button type="button" data-test="delete-btn" @click="deleteOrder(order.id)" class="button button--border">Удалить</button>
       </div>
 
       <div class="order__button">
-        <button type="button" @click="repeatOrder()" class="button">Повторить</button>
+        <button type="button" data-test="repeat-btn" @click="repeatOrder()" class="button">Повторить</button>
       </div>
     </div>
 

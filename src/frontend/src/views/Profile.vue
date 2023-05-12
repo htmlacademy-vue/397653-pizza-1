@@ -36,9 +36,10 @@
             :address="address"
             :user="user"
             @closeNewAddressForm="closeNewAddressForm"
+            data-test="address-form"
           />
 
-          <div v-else class="sheet address-form">
+          <div v-else class="sheet address-form" data-test="address-card">
             <div class="address-form__header">
               <b>Адрес №{{ address.id }}. {{ address.name }}</b>
               <div class="address-form__edit">
@@ -46,6 +47,7 @@
                   type="button"
                   class="icon"
                   @click="openFormToEdit(address.id)"
+                  data-test="edit-address-button"
                 >
                   <span class="visually-hidden">Изменить адрес</span>
                 </button>
@@ -60,13 +62,14 @@
         </div>
 
         <div v-if="newAddressForm">
-          <ProfileAddressForm :address="newAddressData" :user="user" @closeNewAddressForm="closeNewAddressForm"/>
+          <ProfileAddressForm :address="newAddressData" :user="user" @closeNewAddressForm="closeNewAddressForm" data-test="new-address-form"/>
         </div>
         <div class="layout__button">
           <button
             @click="openNewAddressForm"
             type="button"
             class="button button--border"
+            data-test="add-address-button"
           >
             Добавить новый адрес
           </button>

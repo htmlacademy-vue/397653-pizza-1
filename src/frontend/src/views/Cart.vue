@@ -7,9 +7,12 @@
             <h1 class="title title--big">Корзина</h1>
           </div>
 
-          <CartEmpty v-if="pizza.length == 0" />
+          <CartEmpty
+            v-if="pizza.length == 0"
+            data-test="cart-empty"
+          />
 
-          <ul v-if="pizza.length > 0" class="cart-list sheet">
+          <ul v-if="pizza.length > 0" class="cart-list sheet" data-test="cart-items">
             <li class="cart-list__item" v-for="item in pizza" :key="item.id">
               <div class="product cart-list__product">
                 <img
@@ -42,6 +45,7 @@
                   @click="setPizzaToBuilder(item)"
                   type="button"
                   class="cart-list__edit"
+                  data-test="cart-edit-button"
                 >
                   Изменить
                 </button>
@@ -81,15 +85,16 @@
             v-if="pizza.length > 0"
             @setAddress="setAddress"
             :reorderAddressId="addressId"
+            data-test="address-form"
           ></CartForm>
         </div>
       </main>
 
       <transition name="replace">
-        <CartModal @close="closeModal" v-if="isModal" />
+        <CartModal @close="closeModal" v-if="isModal" data-test="success-popup" />
       </transition>
 
-      <section class="footer">
+      <section class="footer" data-test="cart-footer">
         <div class="footer__more">
           <router-link to="/" class="button button--border button--arrow">
             Хочу еще одну
@@ -102,7 +107,7 @@
           <b>Итого: {{ resultPrice }} ₽</b>
         </div>
         <div class="footer__submit">
-          <button class="button" type="submit" @click.prevent="saveOrder">Оформить заказ</button>
+          <button class="button" type="submit" @click.prevent="saveOrder" data-test="order-form">Оформить заказ</button>
         </div>
       </section>
     </form>
