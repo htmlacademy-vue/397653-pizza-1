@@ -13,6 +13,7 @@ import { DATA_TRANSFER_PAYLOAD } from '@/common/constants';
 
 export default {
   name: 'AppDrop',
+
   methods: {
     onDrop({ dataTransfer }) {
       if (!dataTransfer) {

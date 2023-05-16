@@ -12,8 +12,16 @@
             data-test="cart-empty"
           />
 
-          <ul v-if="pizza.length > 0" class="cart-list sheet" data-test="cart-items">
-            <li class="cart-list__item" v-for="item in pizza" :key="item.id">
+          <ul
+            v-if="pizza.length > 0"
+            class="cart-list sheet"
+            data-test="cart-items"
+          >
+            <li
+              v-for="item in pizza"
+              :key="item.id"
+              class="cart-list__item"
+            >
               <div class="product cart-list__product">
                 <img
                   src="@/assets/img/product.svg"
@@ -25,14 +33,19 @@
                 <div class="product__text">
                   <h2>{{ item.label }}</h2>
                   <ul>
-                    <li v-for="desc in item.description" :key="desc.id">{{ desc }}</li>
+                    <li
+                      v-for="desc in item.description"
+                      :key="desc.id"
+                    >
+                      {{ desc }}
+                    </li>
                   </ul>
                 </div>
               </div>
               <div class="counter cart-list__counter">
                 <ItemCounter
-                  @change="itemCountPizza($event, item)"
                   :count="item.count"
+                  @change="itemCountPizza($event, item)"
                 />
               </div>
 
@@ -42,10 +55,10 @@
 
               <div class="cart-list__button">
                 <button
-                  @click="setPizzaToBuilder(item)"
                   type="button"
                   class="cart-list__edit"
                   data-test="cart-edit-button"
+                  @click="setPizzaToBuilder(item)"
                 >
                   Изменить
                 </button>
@@ -53,7 +66,10 @@
             </li>
           </ul>
 
-          <div v-if="pizza.length > 0" class="cart__additional">
+          <div
+            v-if="pizza.length > 0"
+            class="cart__additional"
+          >
             <ul class="additional-list">
               <li
                 v-for="item in labeledMisc"
@@ -61,15 +77,19 @@
                 class="additional-list__item sheet"
               >
                 <p class="additional-list__description">
-                  <img :src="item.image" width="39" height="60" />
+                  <img
+                    :src="item.image"
+                    width="39"
+                    height="60"
+                  />
                   <span>{{ item.name }}</span>
                 </p>
 
                 <div class="additional-list__wrapper">
 
                   <ItemCounter
-                    @change="itemCountMisc($event, item)"
                     :count="item.count"
+                    @change="itemCountMisc($event, item)"
                   />
 
                   <div class="additional-list__price">
@@ -83,20 +103,30 @@
 
           <CartForm
             v-if="pizza.length > 0"
-            @setAddress="setAddress"
-            :reorderAddressId="addressId"
+            :reorder-address-id="addressId"
             data-test="address-form"
+            @setAddress="setAddress"
           ></CartForm>
         </div>
       </main>
 
       <transition name="replace">
-        <CartModal @close="closeModal" v-if="isModal" data-test="success-popup" />
+        <CartModal
+          v-if="isModal"
+          data-test="success-popup"
+          @close="closeModal"
+        />
       </transition>
 
-      <section class="footer" data-test="cart-footer">
+      <section
+        class="footer"
+        data-test="cart-footer"
+      >
         <div class="footer__more">
-          <router-link to="/" class="button button--border button--arrow">
+          <router-link
+            to="/"
+            class="button button--border button--arrow"
+          >
             Хочу еще одну
           </router-link>
         </div>
@@ -107,7 +137,14 @@
           <b>Итого: {{ resultPrice }} ₽</b>
         </div>
         <div class="footer__submit">
-          <button class="button" type="submit" @click.prevent="saveOrder" data-test="order-form">Оформить заказ</button>
+          <button
+            class="button"
+            type="submit"
+            data-test="order-form"
+            @click.prevent="saveOrder"
+          >
+            Оформить заказ
+          </button>
         </div>
       </section>
     </form>
@@ -115,21 +152,25 @@
 </template>
 
 <script>
-import ItemCounter from "@/common/components/ItemCounter";
 import { mapActions, mapGetters, mapMutations, mapState } from "vuex";
+import { validator } from "@/common/mixins";
+import ItemCounter from "@/common/components/ItemCounter";
 import CartModal from "@/modules/cart/components/CartModal";
 import CartEmpty from "@/modules/cart/components/CartEmpty";
 import CartForm from "@/modules/cart/components/CartForm";
-import { validator } from "@/common/mixins";
+
 export default {
   name: "Cart",
-  mixins: [validator],
+
   components: {
     ItemCounter,
     CartModal,
     CartEmpty,
     CartForm,
   },
+
+  mixins: [validator],
+
   data() {
     return {
       isModal: false,
@@ -148,40 +189,49 @@ export default {
       },
     };
   },
+
   async mounted() {
     this.addressId = this.$route.params.addressId;
     await this.getMiscData()
   },
+
   computed: {
     ...mapGetters("cart", ["labeledMisc", "getPriceMisc", "getPricePizzas"]),
     ...mapState("auth", ["user"]),
     ...mapState("addresses", ["addresses"]),
     ...mapState("cart", ["misc", "pizza"]),
+
     resultPrice() {
       this.setTotalPrice(this.getPricePizzas + this.getPriceMisc);
       return this.getPricePizzas + this.getPriceMisc;
     },
   },
+
   methods: {
     ...mapMutations("cart", ["setCountMisc", "setCountPizza", "setTotalPrice"]),
     ...mapActions("orders", ["createOrder"]),
     ...mapActions("builder", ["editPizza"]),
     ...mapActions("cart", ["resetCartState", "getMiscData"]),
+
     itemCountMisc(count, label) {
       let item = { label: label, count: count };
       this.setCountMisc(item);
     },
+
     itemCountPizza(count, label) {
       let item = { label: label, count: count };
       this.setCountPizza(item);
     },
+
     closeModal() {
       this.isModal = false;
     },
+
     setAddress({ phone, address }) {
       this.phone = phone;
       this.address = address;
     },
+
     normalizePizzas() {
       return this.pizza.map((pizza) => {
         return {
@@ -199,6 +249,7 @@ export default {
         };
       });
     },
+
     normalizeMisc() {
       return this.misc.map((item) => {
         return {
@@ -207,10 +258,12 @@ export default {
         };
       });
     },
+
     async setPizzaToBuilder(pizza) {
       this.editPizza(pizza);
       await this.$router.push({ name: "IndexHome" });
     },
+
     async saveOrder() {
       if (
         this.address !== null &&
@@ -237,7 +290,7 @@ export default {
 };
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
   .layout-form {
     height: calc(100vh - 61px)
   }

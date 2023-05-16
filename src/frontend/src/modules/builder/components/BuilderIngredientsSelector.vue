@@ -11,7 +11,7 @@
             :value="sauce.label"
             class="radio ingredients__input"
             :name="'sauce'"
-            :isChecked="currentSauce.id === sauce.id"
+            :is-checked="currentSauce.id === sauce.id"
             @changePizza="setCurrentSauce(sauce)"
           >
             <span data-test="sauce">{{ sauce.name }}</span>
@@ -21,9 +21,9 @@
           <p>Начинка:</p>
           <ul class="ingredients__list">
             <li
-              class="ingredients__item"
               v-for="ingredient in ingredientsItems"
               :key="ingredient.id"
+              class="ingredients__item"
               data-test="ingredients-item"
             >
               <AppDrag
@@ -35,10 +35,10 @@
                 </span>
               </AppDrag>
               <ItemCounter
-                @change="changeIngredient($event, ingredient)"
                 :count="ingredient.count"
-                :maxValue="max"
+                :max-value="max"
                 data-test="ingredients-counter"
+                @change="changeIngredient($event, ingredient)"
               />
             </li>
           </ul>
@@ -49,23 +49,35 @@
 </template>
 
 <script>
+import { mapState, mapGetters, mapMutations } from "vuex";
 import { mapIngredientName } from '@/common/enums/pizzaIngredientName'
 import { mapSauceName } from '@/common/enums/pizzaSauceName'
-import {  MAX_INGREDIENT_VALUE } from '@/common/constants'
+import { MAX_INGREDIENT_VALUE } from '@/common/constants'
 import AppDrag from '@/common/components/AppDrag';
 import RadioButton from '@/common/components/RadioButton'
 import ItemCounter from '@/common/components/ItemCounter'
-import { mapState, mapGetters, mapMutations } from "vuex";
 
 export default {
   name: 'BuilderIngredientsSelector',
+
   components: {
     AppDrag,
     RadioButton,
     ItemCounter
   },
+
+  computed: {
+    ...mapGetters("builder", ["labeledSauces"]),
+    ...mapState("builder", ["currentSauce", "ingredientsItems"]),
+
+    max() {
+      return MAX_INGREDIENT_VALUE
+    },
+  },
+
   methods: {
     ...mapMutations("builder", ["setCurrentSauce", "setCountIngredients"]),
+
     getIngredientClass(name) {
       return 'filling--' + mapIngredientName[name]
     },
@@ -77,13 +89,6 @@ export default {
       this.setCountIngredients(item);
     },
   },
-  computed: {
-    ...mapGetters("builder", ["labeledSauces"]),
-    ...mapState("builder", ["currentSauce", "ingredientsItems"]),
-    max() {
-      return MAX_INGREDIENT_VALUE
-    },
-  }
 };
 </script>
 

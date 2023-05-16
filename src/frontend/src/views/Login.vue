@@ -1,6 +1,10 @@
 ﻿<template>
   <div class="sign-form">
-    <a class="close close--white" @click="closeDialog" data-test="close">
+    <a
+      class="close close--white"
+      data-test="close"
+      @click="closeDialog"
+    >
       <span class="visually-hidden">Закрыть форму авторизации</span>
     </a>
     <div class="sign-form__title">
@@ -33,7 +37,12 @@
           />
         </label>
       </div>
-      <button type="submit" class="button">Авторизоваться</button>
+      <button
+        type="submit"
+        class="button"
+      >
+        Авторизоваться
+      </button>
     </form>
   </div>
 </template>
@@ -41,9 +50,12 @@
 <script>
 import validator from "@/common/mixins/validator";
 import { mapActions } from "vuex";
+
 export default {
   name: "Login",
+
   mixins: [validator],
+
   data() {
     return {
       email: "",
@@ -60,6 +72,7 @@ export default {
       },
     };
   },
+
   watch: {
     email() {
       this.$clearValidationError("email");
@@ -68,11 +81,14 @@ export default {
       this.$clearValidationError("password");
     },
   },
+
   mounted() {
     this.$refs.email.$refs.input.focus();
   },
+
   methods: {
     ...mapActions("auth", ["login"]),
+
     async onSubmit() {
       if (
         !this.$validateFields(
@@ -88,6 +104,7 @@ export default {
       });
       await this.$router.push("/");
     },
+
     closeDialog() {
       this.$router.push("/");
     }

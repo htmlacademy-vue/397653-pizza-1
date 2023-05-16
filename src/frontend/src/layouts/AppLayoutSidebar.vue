@@ -4,7 +4,10 @@
     <div class="content">
       <main class="layout">
         <div class="layout__sidebar sidebar">
-          <router-link to="/" class="logo layout__logo">
+          <router-link
+            to="/"
+            class="logo layout__logo"
+          >
             <img
               src="@/assets/img/logo.svg"
               alt="V!U!E! Pizza logo"
@@ -12,12 +15,18 @@
               height="40"
             />
           </router-link>
-          <router-link to="/orders" class="orders-link layout__link"
-            >История заказов</router-link
+          <router-link
+            to="/orders"
+            class="orders-link layout__link"
           >
-          <router-link to="/profile" class="profile-link layout__link"
-            >Мои данные</router-link
+            История заказов
+          </router-link>
+          <router-link
+            to="/profile"
+            class="profile-link layout__link"
           >
+            Мои данные
+          </router-link>
         </div>
       </main>
       <slot />
@@ -29,6 +38,7 @@ import AppLayoutHeader from "@/layouts/AppLayoutHeader";
 
 export default {
   name: "AppLayoutSidebar",
+
   components: {
     AppLayoutHeader,
   },

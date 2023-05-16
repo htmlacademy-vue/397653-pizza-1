@@ -1,5 +1,8 @@
 ﻿<template>
-  <transition name="slide" mode="out-in">
+  <transition
+    name="slide"
+    mode="out-in"
+  >
     <component :is="layout">
       <slot />
     </component>
@@ -12,6 +15,7 @@ const defaultLayout = 'AppLayoutDefault';
 
 export default {
   name: 'AppLayout',
+
   computed: {
     layout() {
       const layout = this.$route.meta.layout || defaultLayout;

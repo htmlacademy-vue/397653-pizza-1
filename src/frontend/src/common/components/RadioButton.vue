@@ -15,6 +15,7 @@
 <script>
 export default {
   name: 'RadioButton',
+
   props: {
     value: {
       type: String,

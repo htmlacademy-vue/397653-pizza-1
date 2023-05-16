@@ -9,7 +9,7 @@
           :value="getDoughValue(dough.name)"
           :class="['dough__input', getDoughClass(dough.name)]"
           :name="'dough'"
-          :isChecked="dough.id === currentDough.id"
+          :is-checked="dough.id === currentDough.id"
           @changePizza="changeDough(dough)"
         >
           <b>{{ dough.name }}</b>
@@ -21,21 +21,25 @@
 </template>
 
 <script>
+import { mapState, mapGetters, mapMutations } from "vuex";
 import { mapDough } from '@/common/enums/pizzaDough'
 import RadioButton from '@/common/components/RadioButton'
-import { mapState, mapGetters, mapMutations } from "vuex";
 
 export default {
   name: 'BuilderDoughSelector',
+
   components: {
     RadioButton
   },
+
   computed: {
     ...mapGetters("builder", ["labeledDough"]),
     ...mapState("builder", ["currentDough"]),
   },
+
   methods: {
     ...mapMutations("builder", ["setCurrentDough"]),
+
     getDoughClass(name) {
       return 'dough__input--' + mapDough[name]
     },

@@ -49,30 +49,39 @@
 </template>
 
 <script>
+import { mapMutations, mapState, mapActions, mapGetters } from 'vuex'
 import { mapIngredientName } from '@/common/enums/pizzaIngredientName'
 import BuilderPriceCounter from '@/modules/builder/components/BuilderPriceCounter';
 import AppDrop from '@/common/components/AppDrop'
-import { mapMutations, mapState, mapActions, mapGetters } from 'vuex'
 
 export default {
   name: 'BuilderPizzaView',
+
   components: {
     BuilderPriceCounter,
     AppDrop
   },
+
   computed: {
     ...mapState("builder", ["currentDough", "currentSauce", "namePizza", "ingredientsItems"]),
     ...mapState("cart", ["misc"]),
+
     doughClass() {
       return this.currentDough.label
     },
     pizzaSauceClass() {
       return this.currentSauce.label
     },
-    isDisabled() {
+    isSomeChecked() {
       const isSomeChecked = (el) => el.count !== 0;
-      const isCheckedIngredients = this.ingredientsItems.some(isSomeChecked);
-      if (isCheckedIngredients && this.namePizza) {
+      return isSomeChecked
+    },
+    isCheckedIngredients() {
+      const isCheckedIngredients = this.ingredientsItems.some(this.isSomeChecked);
+      return isCheckedIngredients
+    },
+    isDisabled() {
+      if (this.isCheckedIngredients && this.namePizza) {
         return false;
       } else return true;
     }
@@ -83,9 +92,11 @@ export default {
     ...mapGetters("builder", ["getPrice"]),
     ...mapActions("builder", ["resetBuilderState", "getDoughData", "getSaucesData", "getSizesData", "getIngredientsData"]),
     ...mapActions("cart", ["setPizzaSettingsForCart", "changeMiscItemQuantity"]),
+
     getClass(name) {
       return mapIngredientName[name]
     },
+
     getIngredientClasses(count) {
       let className = "";
       switch (count) {
@@ -98,6 +109,7 @@ export default {
       }
       return className;
     },
+
     addPizza() {
       let totalPrice = this.getPrice()
       this.setTotalPrice(totalPrice)
@@ -143,7 +155,7 @@ export default {
 };
 </script>
 
-<style>
+<style lang="scss" scoped>
 .ingredients-enter-active,
 .ingredients-leave-active {
   transition: all .5s ease;
