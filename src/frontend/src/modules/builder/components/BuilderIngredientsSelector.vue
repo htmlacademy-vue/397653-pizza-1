@@ -27,7 +27,7 @@
               data-test="ingredients-item"
             >
               <AppDrag
-                :transferData="ingredient"
+                :transfer-data="ingredient"
                 :draggable="ingredient.count !== max"
               >
                 <span :class="['filling', getIngredientClass(ingredient.name)]">
