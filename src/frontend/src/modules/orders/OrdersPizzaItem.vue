@@ -21,27 +21,34 @@
 <script>
 import { mapState } from "vuex";
 import { getItemById } from "@/common/helpers";
+
 export default {
-  name: "PizzaItem",
+  name: "OrdersPizzaItem",
+
   props: {
     pizza: {
       type: Object,
       required: true,
     },
   },
+
   computed: {
     ...mapState("builder", ["dough", "sauces", "sizes", "ingredientsItems"]),
+
     sizeName() {
       return getItemById(this.sizes, this.pizza.sizeId).name;
     },
+
     doughName() {
       const dough = getItemById(this.dough, this.pizza.doughId);
       const name = dough.name === "Толстое" ? "толстом" : "тонком";
       return `на ${name} тесте`;
     },
+
     sauceName() {
       return getItemById(this.sauces, this.pizza.sauceId).name.toLowerCase();
     },
+
     ingredientsName() {
       const names = this.pizza.ingredients.map((el) => {
         return getItemById(this.ingredientsItems, el.ingredientId).name.toLowerCase();

@@ -7,6 +7,7 @@ import { mapGetters } from "vuex";
 
 export default {
   name: 'BuilderPriceCounter',
+
   computed: {
     ...mapGetters("builder", ["getPrice"]),
   },

@@ -1,6 +1,10 @@
 ﻿<template>
   <div class="popup">
-    <a href="#" class="close" @click="closeModal()">
+    <a
+      href="#"
+      class="close"
+      @click="closeModal()"
+    >
       <span class="visually-hidden">Закрыть попап</span>
     </a>
     <div class="popup__title">
@@ -8,20 +12,30 @@
     </div>
     <p>Мы начали готовить Ваш заказ, скоро привезём его вам ;)</p>
     <div class="popup__button">
-      <a href="#" class="button" @click.prevent="closeModal()"> Отлично, я жду! </a>
+      <a
+        href="#"
+        class="button"
+        @click.prevent="closeModal()"
+      >
+        Отлично, я жду!
+      </a>
     </div>
   </div>
 </template>
 
 <script>
 import { mapActions, mapState } from "vuex";
+
 export default {
   name: "CartModal",
+
   computed: {
     ...mapState("auth", ["user"]),
   },
+
   methods: {
     ...mapActions("cart", ["resetCartState", "getMiscData"]),
+
     async closeModal() {
       this.resetCartState()
       await this.getMiscData()

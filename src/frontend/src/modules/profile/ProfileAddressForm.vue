@@ -1,8 +1,9 @@
 ﻿<template>
-  <div :key="address.id" class="layout__address">
-    <form
-      class="address-form address-form--opened sheet"
-    >
+  <div
+    :key="address.id"
+    class="layout__address"
+  >
+    <form class="address-form address-form--opened sheet">
       <div class="address-form__header">
         <b>{{ title }}</b>
       </div>
@@ -73,17 +74,19 @@
           v-if="isAddressEdited"
           type="button"
           class="button button--transparent"
-          @click.prevent="deleteAddress(address.id)"
           data-test="delete-button"
+          @click.prevent="deleteAddress(address.id)"
         >
           Удалить
         </button>
         <button
           type="submit"
           class="button"
-          @click.prevent="saveAddress"
           data-test="save-button"
-          >Сохранить</button>
+          @click.prevent="saveAddress"
+        >
+          Сохранить
+        </button>
       </div>
     </form>
   </div>
@@ -94,15 +97,28 @@ import { mapActions } from "vuex";
 
 export default {
   name: "ProfileAddressForm",
+
   props: {
     address: {
       type: Object,
       required: true,
     },
+
     user: {
       type: Object,
       required: true,
     },
+  },
+
+  data() {
+    return {
+      id: null,
+      name: "",
+      street: "",
+      building: "",
+      flat: "",
+      comment: "",
+    };
   },
 
   computed: {
@@ -122,17 +138,6 @@ export default {
       this.flat = this.address.flat;
       this.comment = this.address.comment;
     }
-  },
-
-  data() {
-    return {
-      id: null,
-      name: "",
-      street: "",
-      building: "",
-      flat: "",
-      comment: "",
-    };
   },
 
   methods: {

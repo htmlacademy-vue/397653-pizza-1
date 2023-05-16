@@ -14,6 +14,7 @@ export default {
   components: {
     AppLayout,
   },
+
   created() {
     if (this.$jwt.getToken()) {
       setAuth(this.$store);

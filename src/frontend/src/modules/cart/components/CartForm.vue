@@ -33,7 +33,10 @@
         />
       </label>
 
-      <div v-if="isAddressFormDisplayed" class="cart-form__address">
+      <div
+        v-if="isAddressFormDisplayed"
+        class="cart-form__address"
+      >
         <span class="cart-form__label">{{ addressFormName }}:</span>
 
         <div class="cart-form__input">
@@ -82,19 +85,24 @@
 </template>
 
 <script>
-import AppInput from "@/common/components/AppInput";
 import { mapActions, mapState } from "vuex";
 import { validator } from "@/common/mixins";
+import AppInput from "@/common/components/AppInput";
+
 export default {
   name: "CartForm",
+
   components: { AppInput },
+
   mixins: [validator],
+
   props: {
     reorderAddressId: {
       type: Number,
       default: null,
     },
   },
+
   data() {
     return {
       deliveryOption: "pickup",
@@ -118,6 +126,19 @@ export default {
       },
     };
   },
+
+  computed: {
+    ...mapState("auth", ["user"]),
+    ...mapState("addresses", ["addresses"]),
+
+    isAddressFormDisplayed() {
+      return this.deliveryOption !== "pickup";
+    },
+    isAddressDisabled() {
+      return this.deliveryOption !== "newAddress";
+    },
+  },
+
   watch: {
     street() {
       this.$clearValidationError("street");
@@ -126,16 +147,7 @@ export default {
       this.$clearValidationError("building");
     },
   },
-  computed: {
-    ...mapState("auth", ["user"]),
-    ...mapState("addresses", ["addresses"]),
-    isAddressFormDisplayed() {
-      return this.deliveryOption !== "pickup";
-    },
-    isAddressDisabled() {
-      return this.deliveryOption !== "newAddress";
-    },
-  },
+
   async mounted() {
     if (this.user !== null) {
       this.phone = this.user.phone;
@@ -146,8 +158,10 @@ export default {
       this.changeAddress(this.reorderAddressId);
     }
   },
+
   methods: {
     ...mapActions("addresses", ["getAddresses", "resetAddressesState"]),
+
     changeAddress(value) {
       this.deliveryOption = value;
       this.disabledInputs = false;
@@ -170,6 +184,7 @@ export default {
       }
       this.setOrderAddress();
     },
+
     setOrderAddress() {
       const formAddress = {
         id: this.addressId,

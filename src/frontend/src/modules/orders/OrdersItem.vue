@@ -10,16 +10,34 @@
       </div>
 
       <div class="order__button">
-        <button type="button" data-test="delete-btn" @click="deleteOrder(order.id)" class="button button--border">Удалить</button>
+        <button
+          type="button"
+          data-test="delete-btn"
+          class="button button--border"
+          @click="deleteOrder(order.id)"
+        >
+          Удалить
+        </button>
       </div>
 
       <div class="order__button">
-        <button type="button" data-test="repeat-btn" @click="repeatOrder()" class="button">Повторить</button>
+        <button
+          type="button"
+          data-test="repeat-btn"
+          class="button"
+          @click="repeatOrder()"
+        >
+          Повторить
+        </button>
       </div>
     </div>
 
     <ul class="order__list">
-      <li v-for="pizza in pizzas" :key="pizza.id" class="order__item">
+      <li
+        v-for="pizza in pizzas"
+        :key="pizza.id"
+        class="order__item"
+      >
         <OrdersPizzaItem :pizza="pizza" />
 
         <p class="order__price">{{ pizza.price }} ₽</p>
@@ -27,8 +45,16 @@
     </ul>
 
     <ul class="order__additional">
-      <li v-for="item in additionals" :key="item.id">
-        <img :src="item.image" width="20" height="30" :alt="item.name" />
+      <li
+        v-for="item in additionals"
+        :key="item.id"
+      >
+        <img
+          :src="item.image"
+          width="20"
+          height="30"
+          :alt="item.name"
+        />
         <p>
           <span>{{ item.name }}</span>
           <b>{{ item.count }}х{{ item.price }} ₽</b>
@@ -44,30 +70,37 @@
 import { getItemById } from "@/common/helpers";
 import { mapState, mapActions } from "vuex";
 import OrdersPizzaItem from "@/modules/orders/OrdersPizzaItem";
+
 export default {
   name: "OrdersItem",
+
   components: {
     OrdersPizzaItem,
   },
+
   props: {
     order: {
       type: Object,
       required: true,
     },
   },
+
   computed: {
     ...mapState("cart", ["misc"]),
     ...mapState("builder", ["dough", "sauces", "sizes", "ingredientsItems"]),
+
     address() {
       return this.order.orderAddress
         ? this.order.orderAddress.name
         : "Самовывоз";
     },
+
     pizzas() {
       return this.order.orderPizzas.map((pizza) => {
         return { ...pizza, price: this.getPrice(pizza) };
       });
     },
+
     additionals() {
       return this.order.orderMisc.map((misc) => {
         return {
@@ -76,14 +109,17 @@ export default {
         };
       });
     },
+
     orderPrice() {
       return this.getOrderPrice(this.pizzas, this.order.orderMisc);
     },
   },
+
   methods: {
     ...mapActions("orders", ["deleteOrder"]),
     ...mapActions("cart", ["setPizzaSettingsForCart"]),
     ...mapActions("cart", ["changeMiscItemQuantity"]),
+
     getOrderPrice(pizzas, misc) {
       const pizzaPrices = pizzas.map((pizza) => pizza.price * pizza.quantity);
       const miscPrices = misc.map(
@@ -92,6 +128,7 @@ export default {
       const allPrices = [...pizzaPrices, ...miscPrices];
       return allPrices.length ? allPrices.reduce((a, b) => a + b, 0) : 0;
     },
+
     getPrice(pizza) {
       const doughPrice = getItemById(this.dough, pizza.doughId).price;
       const saucePrice = getItemById(this.sauces, pizza.sauceId).price;
@@ -105,6 +142,7 @@ export default {
         .reduce((a, b) => a + b, 0);
       return (doughPrice + saucePrice + ingredientsPrice) * multiplier;
     },
+
     async repeatOrder() {
       this.pizzas.forEach((pizza) => {
         let pizzaState = this.$store.state.builder;

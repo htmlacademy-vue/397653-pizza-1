@@ -20,6 +20,8 @@
 import { mapState } from "vuex";
 
 export default {
+  name: "UserIcon",
+
   computed: {
     ...mapState("auth", ["user"]),
 
