@@ -28,7 +28,7 @@
                   :class="`pizza__filling pizza__filling--${
                     ingredient.label
                   } ${getIngredientClasses(count)}`"
-                ></div>
+                />
               </template>
             </transition-group>
           </div>
