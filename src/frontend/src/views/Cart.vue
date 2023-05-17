@@ -106,7 +106,7 @@
             :reorder-address-id="addressId"
             data-test="address-form"
             @setAddress="setAddress"
-          ></CartForm>
+          />
         </div>
       </main>
 
